@@ -1,0 +1,194 @@
+{
+  "classes": {
+    "BugReport": {
+      "name": "BugReport",
+      "filename": "lib/bug-report.coffee",
+      "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/bug-report.coffee#L18",
+      "sections": [],
+      "classMethods": [],
+      "instanceMethods": [
+        {
+          "name": "activate",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/bug-report.coffee#L28",
+          "visibility": "Public",
+          "summary": "Activates the package. ",
+          "description": "Activates the package. "
+        },
+        {
+          "name": "deactivate",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/bug-report.coffee#L43",
+          "visibility": "Public",
+          "summary": "Deactivates the package. ",
+          "description": "Deactivates the package. "
+        },
+        {
+          "name": "open",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/bug-report.coffee#L48",
+          "visibility": "Public",
+          "summary": "Opens the bug report. ",
+          "description": "Opens the bug report. "
+        }
+      ],
+      "classProperties": [],
+      "instanceProperties": [],
+      "visibility": "Public",
+      "summary": "Provides a system whereby the user can create and easily post high-quality bug reports.",
+      "description": "Provides a system whereby the user can create and easily post high-quality bug reports.\n\nThis system also allows other packages to report their bugs through the `bug-report` package. "
+    },
+    "CommandLogger": {
+      "name": "CommandLogger",
+      "filename": "lib/command-logger.coffee",
+      "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L16",
+      "sections": [],
+      "classMethods": [],
+      "instanceMethods": [
+        {
+          "name": "constructor",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L24",
+          "visibility": "Public",
+          "summary": "Creates a new logger. ",
+          "description": "Creates a new logger. "
+        },
+        {
+          "name": "getText",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L34",
+          "visibility": "Public",
+          "summary": "Formats the command log for the bug report.",
+          "description": "Formats the command log for the bug report.",
+          "arguments": [
+            {
+              "name": "externalData",
+              "description": "An {Object} containing other information to include in the log.",
+              "type": "Object",
+              "isOptional": false
+            }
+          ],
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns a {String} of the Markdown for the report."
+            }
+          ]
+        },
+        {
+          "name": "latestEvent",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L58",
+          "visibility": "Public",
+          "summary": "Gets the latest event from the log.",
+          "description": "Gets the latest event from the log.",
+          "returnValues": [
+            {
+              "type": "Object",
+              "description": "Returns the event {Object}."
+            }
+          ]
+        },
+        {
+          "name": "logCommand",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L66",
+          "visibility": "Public",
+          "summary": "Logs the command.",
+          "description": "Logs the command.",
+          "arguments": [
+            {
+              "children": [
+                {
+                  "name": "type",
+                  "description": "Name {String} of the command",
+                  "type": "String",
+                  "isOptional": false
+                },
+                {
+                  "name": "target",
+                  "description": "{String} describing where the command was triggered ",
+                  "type": "String",
+                  "isOptional": false
+                }
+              ],
+              "name": "command",
+              "description": "Command {Object} to be logged",
+              "type": "Object",
+              "isOptional": false
+            }
+          ]
+        }
+      ],
+      "classProperties": [],
+      "instanceProperties": [
+        {
+          "name": "dateFmt",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L18",
+          "visibility": "Public",
+          "summary": "Format of time information. ",
+          "description": "Format of time information. "
+        },
+        {
+          "name": "logSize",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/command-logger.coffee#L21",
+          "visibility": "Public",
+          "summary": "Maximum size of the log. ",
+          "description": "Maximum size of the log. "
+        }
+      ],
+      "visibility": "Public",
+      "summary": "Handles logging all of the Atom commands for the automatic repro steps feature.",
+      "description": "Handles logging all of the Atom commands for the automatic repro steps feature.\n\nIt uses an array as a circular data structure to log only the most recent commands. "
+    },
+    "PanelView": {
+      "name": "PanelView",
+      "superClass": "View",
+      "filename": "lib/panel-view.coffee",
+      "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/panel-view.coffee#L17",
+      "sections": [],
+      "classMethods": [],
+      "instanceMethods": [
+        {
+          "name": "initialize",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/panel-view.coffee#L65",
+          "visibility": "Public",
+          "summary": "Initializes the {PanelView}.",
+          "description": "Initializes the {PanelView}.",
+          "arguments": [
+            {
+              "name": "editor",
+              "description": "{TextEditor} instance within which to display the panel. ",
+              "type": "TextEditor",
+              "isOptional": false
+            }
+          ]
+        },
+        {
+          "name": "destroy",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/panel-view.coffee#L106",
+          "visibility": "Public",
+          "summary": "Destroys the {PanelView}. ",
+          "description": "Destroys the {PanelView}. "
+        },
+        {
+          "name": "post",
+          "sectionName": null,
+          "srcUrl": "https://github.com/lee-dohm/bug-report/blob/v0.5.0/lib/panel-view.coffee#L112",
+          "visibility": "Public",
+          "summary": "Posts the bug report to GitHub. ",
+          "description": "Posts the bug report to GitHub. "
+        }
+      ],
+      "classProperties": [],
+      "instanceProperties": [],
+      "visibility": "Public",
+      "summary": "Panel placed at the bottom of the bug report editor pane that allows posting the report\n       directly to GitHub. ",
+      "description": "Panel placed at the bottom of the bug report editor pane that allows posting the report\n       directly to GitHub. "
+    }
+  }
+}
