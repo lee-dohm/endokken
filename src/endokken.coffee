@@ -1,15 +1,13 @@
 #!/usr/bin/env coffee
 
-fs = require 'fs'
-path = require 'path'
+ClassPage = require './class-page'
 
-hamlc = require 'haml-coffee'
+page = new ClassPage
+  name: 'BugReport'
+  description: """
+    Provides a system whereby the user can create and easily post high-quality bug reports.
 
-compileTemplate = (name) ->
-  haml = fs.readFileSync(path.join(__dirname, '../templates', name)).toString()
-  hamlc.compile(haml)
+    This system also allows other packages to report their bugs through the `bug-report` package.
+  """
 
-template = compileTemplate('layout.haml')
-html = template(title: 'Endokkened', content: '<p>Test</p>')
-
-console.log(html)
+console.log(page.render())
