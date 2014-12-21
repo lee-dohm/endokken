@@ -1,13 +1,15 @@
 #!/usr/bin/env coffee
 
+fs = require 'fs'
+path = require 'path'
+
 ClassPage = require './class-page'
+Renderable = require './renderable'
 
-page = new ClassPage
-  name: 'BugReport'
-  description: """
-    Provides a system whereby the user can create and easily post high-quality bug reports.
+object = JSON.parse(fs.readFileSync(path.join(__dirname, '../spec/fixtures/api.json')).toString())
+page = new ClassPage(object.classes.CommandLogger)
+fullPage = new Renderable 'layout',
+  content: page.render()
+  title: "Endokken: #{page.title}"
 
-    This system also allows other packages to report their bugs through the `bug-report` package.
-  """
-
-console.log(page.render())
+console.log(fullPage.render())
