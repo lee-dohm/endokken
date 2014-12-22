@@ -1,0 +1,73 @@
+@line-color: #bbb;
+@signature-border-color: #d8d8e5;
+@signature-highlight-color: #e8f4ff;
+@signature-lowlight-color: #f8f8f8;
+
+.center-align {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-text {
+  text-align: center;
+}
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Grande', Verdana, Arial, sans-serif;
+  font-size: 10pt;
+
+  a {
+    color: #00e;
+    text-decoration: none;
+  }
+}
+
+h2 {
+  border-bottom: 1px solid @line-color;
+}
+
+table.parameter-block {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 1px solid @line-color;
+
+  th {
+    border: 1px solid @line-color;
+    text-align: left;
+  }
+}
+
+.footer {
+  .center-align;
+  .center-text;
+
+  border-top: 1px solid @line-color;
+  margin-top: 1em;
+  width: 80%;
+}
+
+.method-description {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.detail-method-signature {
+  background: @signature-highlight-color;
+  border: 1px solid @signature-border-color;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 6px 10px;
+}
+
+.summary-method-signature {
+  padding: 4px 8px;
+  background: @signature-lowlight-color;
+  border: 1px solid @signature-border-color;
+  border-radius: 5px;
+
+  &:hover {
+    background: @signature-highlight-color;
+  }
+}

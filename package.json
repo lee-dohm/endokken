@@ -27,6 +27,7 @@
   "dependencies": {
     "coffee-script": "^1.8.0",
     "haml-coffee": "~1.14.1",
+    "less": "^2.1.2",
     "marked": "^0.3.2"
   },
   "devDependencies": {

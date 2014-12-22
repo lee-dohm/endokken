@@ -1,4 +1,5 @@
-.method-signature
-  %a{href: "#instance-method-#{@name}"}
-    %code!= '::' + @signature
+%div
+  %span.summary-method-signature
+    %a{href: "#instance-method-#{@name}"}
+      %code!= '::' + @signature
 .method-description= @summary

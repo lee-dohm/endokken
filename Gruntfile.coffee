@@ -23,11 +23,19 @@ module.exports = (grunt) ->
           stderr: true
           failOnError: true
 
+      less:
+        command: './node_modules/less/bin/lessc ./stylesheets/base.less > ./base.css'
+        options:
+          stdout: true
+          stderr: true
+          failOnError: true
+
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-coffeelint')
 
   grunt.registerTask 'clean', -> require('rimraf').sync('lib')
   grunt.registerTask('lint', ['coffeelint:src', 'coffeelint:test'])
-  grunt.registerTask('default', ['lint', 'test', 'coffee'])
+  grunt.registerTask('less', ['shell:less'])
+  grunt.registerTask('default', ['lint', 'test', 'less', 'coffee'])
   grunt.registerTask('test', ['shell:test'])
