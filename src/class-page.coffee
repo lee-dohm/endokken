@@ -25,7 +25,16 @@ class ClassPage extends Renderable
     if @object.description
       new Renderable('description-section', description: marked(@object.description)).render()
 
+  instanceMethodDetails: (method) ->
+    method.signature = @signature(method)
+    method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
+    method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
+    new Renderable('instance-method-details', method).render()
+
   instanceMethodDetailsSection: ->
+    methods = (@instanceMethodDetails(method) for method in @object.instanceMethods)
+    if methods?.length > 0
+      new Renderable('instance-method-detail-section', content: methods.join('\n')).render()
 
   instanceMethodSummary: (method) ->
     method.signature = @signature(method)
@@ -40,6 +49,15 @@ class ClassPage extends Renderable
     parameters = if method.arguments then @parameters(method) else ''
     returnValues = if method.returnValues then @returnValues(method) else ''
     "#{method.name}(#{parameters})#{returnValues}"
+
+  parameterBlock: (method) ->
+    rows = (@parameterRow(parameter) for parameter in method.arguments)
+    new Renderable('parameter-block-table', rows: rows.join('\n')).render()
+
+  parameterRow: (parameter) ->
+    new Renderable('parameter-block-row', parameter).render()
+
+  returnValueBlock: (method) ->
 
   parameters: (method) ->
     names = (name for {name} in method.arguments)
