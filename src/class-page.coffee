@@ -1,5 +1,3 @@
-marked = require 'marked'
-
 Template = require './template'
 
 # Public: Renders a page for a class.
@@ -26,11 +24,11 @@ class ClassPage extends Template
 
   descriptionSection: ->
     if @object.description
-      Template.render('description-section', description: marked(@object.description))
+      Template.render('description-section', description: @markdownify(@object.description))
 
   instanceMethodDetails: (method) ->
     method.signature = @signature(method)
-    method.description = marked(method.description)
+    method.description = @markdownify(method.description)
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
     Template.render('instance-method-details', method)
@@ -42,7 +40,7 @@ class ClassPage extends Template
 
   instanceMethodSummary: (method) ->
     method.signature = @signature(method)
-    method.summary = marked(method.summary)
+    method.summary = @markdownify(method.summary)
     Template.render('instance-method-summary', method)
 
   instanceMethodSummarySection: ->
@@ -60,6 +58,7 @@ class ClassPage extends Template
     Template.render('parameter-block-table', rows: rows.join('\n'))
 
   parameterRow: (parameter) ->
+    parameter.description = @markdownify(parameter.description)
     Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->

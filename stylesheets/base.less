@@ -1,3 +1,5 @@
+@import "./github";
+
 @line-color: #bbb;
 @signature-border-color: #d8d8e5;
 @signature-highlight-color: #e8f4ff;
@@ -13,13 +15,36 @@
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif;
-  font-size: 10pt;
+  font-family: Georgia;
+  font-size: 11pt;
+  line-height: 1.3;
 
   a {
     color: #00e;
     text-decoration: none;
   }
+}
+
+code {
+  background: @signature-lowlight-color;
+  border-radius: 5px;
+  border: 1px solid @signature-border-color;
+  padding: 2px 4px;
+}
+
+.content pre {
+  margin: 0;
+  padding: 0;
+
+  code {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif;
 }
 
 h2 {
@@ -67,15 +92,19 @@ table.parameter-block {
   margin-top: 1em;
   margin-bottom: 1em;
   padding: 6px 10px;
+
+  code {
+    background: none;
+    border: none;
+  }
 }
 
 .summary-method-signature {
-  padding: 4px 8px;
-  background: @signature-lowlight-color;
-  border: 1px solid @signature-border-color;
-  border-radius: 5px;
+  code {
+    &:hover {
+      background: @signature-highlight-color;
+    }
 
-  &:hover {
-    background: @signature-highlight-color;
+    padding: 4px 8px;
   }
 }

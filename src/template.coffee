@@ -2,6 +2,8 @@ fs = require 'fs'
 path = require 'path'
 
 hamlc = require 'haml-coffee'
+highlightjs = require 'highlight.js'
+marked = require 'marked'
 
 # Public: Used to render a HAML template into an HTML document.
 #
@@ -14,6 +16,12 @@ hamlc = require 'haml-coffee'
 # ```
 module.exports =
 class Template
+  @markedOptions:
+    gfm: true
+    highlight: (code) ->
+      "<div class=\"hljs\">#{highlightjs.highlightAuto(code).value}</div>"
+    smartypants: true
+
   @render: (template, locals) ->
     new this(template, locals).render()
 
@@ -23,6 +31,9 @@ class Template
   # * `locals` {Object} of items to insert into the template
   constructor: (template, @locals) ->
     @templatePath = @normalizeTemplatePath(template)
+
+  markdownify: (content) ->
+    marked(content, Template.markedOptions)
 
   # Public: Renders the page.
   #

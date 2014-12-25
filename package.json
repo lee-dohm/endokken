@@ -31,6 +31,7 @@
     "haml-coffee": "~1.14.1",
     "less": "^2.1.2",
     "marked": "^0.3.2",
+    "highlight.js": "~8.4.0",
     "tello": "~1.0"
   },
   "devDependencies": {
