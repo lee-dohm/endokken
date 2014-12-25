@@ -32,8 +32,10 @@ class Template
   constructor: (template, @locals) ->
     @templatePath = @normalizeTemplatePath(template)
 
-  markdownify: (content) ->
-    marked(content, Template.markedOptions)
+  markdownify: (content, options = {}) ->
+    output = marked(content, Template.markedOptions)
+    output = @stripParagraphTags(output) if options.noParagraph
+    output
 
   # Public: Renders the page.
   #
@@ -44,6 +46,9 @@ class Template
     content = template(@locals)
 
     content.replace(/\n\n/, '\n')
+
+  stripParagraphTags: (content) ->
+    content.replace(/<\/?p>/g, '')
 
   # Private: Rebases the path out of the `templates` directory unless a more specific path is given.
   #

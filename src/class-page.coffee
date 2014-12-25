@@ -58,7 +58,7 @@ class ClassPage extends Template
     Template.render('parameter-block-table', rows: rows.join('\n'))
 
   parameterRow: (parameter) ->
-    parameter.description = @markdownify(parameter.description)
+    parameter.description = @markdownify(parameter.description, noParagraph: true)
     Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->
@@ -68,8 +68,8 @@ class ClassPage extends Template
     names.join(', ')
 
   returnValues: (method) ->
-    types = (type for {type} in method.returnValues)
+    types = (type ? 'null' for {type} in method.returnValues)
     if types.length is 1
       " &rArr; #{types[0]}"
     else
-      " &rArr; [#{types.join(', ')}]"
+      " &rArr; #{types[0...-1].join(', ')} or #{types[-1..]}"
