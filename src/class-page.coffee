@@ -5,6 +5,9 @@ Template = require './template'
 # Public: Renders a page for a class.
 module.exports =
 class ClassPage extends Template
+  @render: (locals) ->
+    new this(locals).render()
+
   constructor: (@object) ->
     locals = @object
     locals.classMethodDetailsSection = @classMethodDetailsSection()
@@ -23,27 +26,27 @@ class ClassPage extends Template
 
   descriptionSection: ->
     if @object.description
-      new Template('description-section', description: marked(@object.description)).render()
+      Template.render('description-section', description: marked(@object.description))
 
   instanceMethodDetails: (method) ->
     method.signature = @signature(method)
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
-    new Template('instance-method-details', method).render()
+    Template.render('instance-method-details', method)
 
   instanceMethodDetailsSection: ->
     methods = (@instanceMethodDetails(method) for method in @object.instanceMethods)
     if methods?.length > 0
-      new Template('instance-method-detail-section', content: methods.join('\n')).render()
+      Template.render('instance-method-detail-section', content: methods.join('\n'))
 
   instanceMethodSummary: (method) ->
     method.signature = @signature(method)
-    new Template('instance-method-summary', method).render()
+    Template.render('instance-method-summary', method)
 
   instanceMethodSummarySection: ->
     methods = (@instanceMethodSummary(method) for method in @object.instanceMethods)
     if methods?.length > 0
-      new Template('instance-method-summary-section', content: methods.join('\n')).render()
+      Template.render('instance-method-summary-section', content: methods.join('\n'))
 
   signature: (method) ->
     parameters = if method.arguments then @parameters(method) else ''
@@ -52,10 +55,10 @@ class ClassPage extends Template
 
   parameterBlock: (method) ->
     rows = (@parameterRow(parameter) for parameter in method.arguments)
-    new Template('parameter-block-table', rows: rows.join('\n')).render()
+    Template.render('parameter-block-table', rows: rows.join('\n'))
 
   parameterRow: (parameter) ->
-    new Template('parameter-block-row', parameter).render()
+    Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->
 
