@@ -7,7 +7,7 @@ ClassPage = require './class-page'
 Template = require './template'
 
 object = JSON.parse(fs.readFileSync(path.join(__dirname, '../spec/fixtures/api.json')).toString())
-klass = object.classes.CommandLogger
+klass = object.classes.TextEditor
 document = Template.render('layout', content: ClassPage.render(klass), title: 'Endokken')
 
 console.log(document)

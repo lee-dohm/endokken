@@ -30,6 +30,7 @@ class ClassPage extends Template
 
   instanceMethodDetails: (method) ->
     method.signature = @signature(method)
+    method.description = marked(method.description)
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
     Template.render('instance-method-details', method)
@@ -41,6 +42,7 @@ class ClassPage extends Template
 
   instanceMethodSummary: (method) ->
     method.signature = @signature(method)
+    method.summary = marked(method.summary)
     Template.render('instance-method-summary', method)
 
   instanceMethodSummarySection: ->
