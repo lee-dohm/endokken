@@ -10,10 +10,13 @@ hamlc = require 'haml-coffee'
 # Basic usage.
 #
 # ```coffee
-# new Renderable('some-template', foo: 'bar').render()
+# Renderable.render('some-template', foo: 'bar')
 # ```
 module.exports =
 class Renderable
+  @render: (template, locals) ->
+    new this(template, locals).render()
+
   # Public: Creates a new `Renderable` object.
   #
   # * `template` Name {String} of the template to use to render the object.
