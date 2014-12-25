@@ -4,11 +4,11 @@ fs = require 'fs'
 path = require 'path'
 
 ClassPage = require './class-page'
-Renderable = require './renderable'
+Template = require './template'
 
 object = JSON.parse(fs.readFileSync(path.join(__dirname, '../spec/fixtures/api.json')).toString())
 page = new ClassPage(object.classes.CommandLogger)
-fullPage = new Renderable 'layout',
+fullPage = new Template 'layout',
   content: page.render()
   title: "Endokken: #{page.title}"
 

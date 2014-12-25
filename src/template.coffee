@@ -3,21 +3,21 @@ path = require 'path'
 
 hamlc = require 'haml-coffee'
 
-# Public: Represents something that renders itself from a template into an HTML document.
+# Public: Used to render a HAML template into an HTML document.
 #
 # ## Examples
 #
 # Basic usage.
 #
 # ```coffee
-# Renderable.render('some-template', foo: 'bar')
+# Template.render('some-template', foo: 'bar')
 # ```
 module.exports =
-class Renderable
+class Template
   @render: (template, locals) ->
     new this(template, locals).render()
 
-  # Public: Creates a new `Renderable` object.
+  # Public: Creates a new `Template` object.
   #
   # * `template` Name {String} of the template to use to render the object.
   # * `locals` {Object} of items to insert into the template
