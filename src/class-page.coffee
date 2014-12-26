@@ -50,7 +50,7 @@ class ClassPage extends Template
 
   signature: (method) ->
     parameters = if method.arguments then @parameters(method) else ''
-    "#{method.name}(#{parameters})#{returnValues}"
+    "#{method.name}(#{parameters})"
 
   parameterBlock: (method) ->
     rows = (@parameterRow(parameter) for parameter in method.arguments)
@@ -71,10 +71,3 @@ class ClassPage extends Template
   parameters: (method) ->
     names = (name for {name} in method.arguments)
     names.join(', ')
-
-  returnValues: (method) ->
-    types = (type ? 'null' for {type} in method.returnValues)
-    if types.length is 1
-      " &rArr; #{types[0]}"
-    else
-      " &rArr; #{types[0...-1].join(', ')} or #{types[-1..]}"
