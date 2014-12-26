@@ -50,7 +50,6 @@ class ClassPage extends Template
 
   signature: (method) ->
     parameters = if method.arguments then @parameters(method) else ''
-    returnValues = if method.returnValues then @returnValues(method) else ''
     "#{method.name}(#{parameters})#{returnValues}"
 
   parameterBlock: (method) ->
@@ -62,6 +61,12 @@ class ClassPage extends Template
     Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->
+    rows = (@returnValueRow(returnValue) for returnValue in method.returnValues)
+    Template.render('return-value-block-table', rows: rows.join('\n'))
+
+  returnValueRow: (returnValue) ->
+    returnValue.description = @markdownify(returnValue.description, noParagraph: true)
+    Template.render('return-value-block-row', returnValue)
 
   parameters: (method) ->
     names = (name for {name} in method.arguments)
