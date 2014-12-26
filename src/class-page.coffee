@@ -8,6 +8,7 @@ class ClassPage extends Template
 
   constructor: (@object) ->
     locals = @object
+    locals.classInfoSection = @classInfoSection()
     locals.classMethodDetailsSection = @classMethodDetailsSection()
     locals.classMethodSummarySection = @classMethodSummarySection()
     locals.descriptionSection = @descriptionSection()
@@ -17,6 +18,9 @@ class ClassPage extends Template
     @title = @object.name
 
     super('class-page', locals)
+
+  classInfoSection: ->
+    Template.render('class-info', @object)
 
   classMethodDetailsSection: ->
 
