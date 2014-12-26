@@ -43,7 +43,7 @@ code {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .footer {
   font-family: 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif;
 }
 
@@ -94,13 +94,22 @@ table.parameter-block {
   width: 80%;
 }
 
-.method-description {
+.description {
   margin-top: 1em;
   margin-bottom: 1em;
-  padding-left: 1.5em;
+  padding-left: 2em;
 }
 
-.detail-method-signature {
+.method, .property {
+  margin-bottom: 2.5em;
+}
+
+.separator {
+  opacity: 0.6;
+  width: 80%;
+}
+
+.signature {
   background: @signature-highlight-color;
   border: 1px solid @signature-border-color;
   border-radius: 5px;
@@ -111,15 +120,5 @@ table.parameter-block {
   code {
     background: none;
     border: none;
-  }
-}
-
-.summary-method-signature {
-  code {
-    &:hover {
-      background: @signature-highlight-color;
-    }
-
-    padding: 4px 8px;
   }
 }
