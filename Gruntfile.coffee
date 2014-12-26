@@ -16,7 +16,7 @@ module.exports = (grunt) ->
       test: ['spec/*.coffee']
 
     shell:
-      test:
+      spec:
         command: './node_modules/jasmine-focused/bin/jasmine-focused --captureExceptions --coffee spec/'
         options:
           stdout: true
@@ -38,4 +38,5 @@ module.exports = (grunt) ->
   grunt.registerTask('lint', ['coffeelint:src', 'coffeelint:test'])
   grunt.registerTask('less', ['shell:less'])
   grunt.registerTask('default', ['lint', 'test', 'less', 'coffee'])
-  grunt.registerTask('test', ['shell:test'])
+  grunt.registerTask('spec', ['shell:spec'])
+  grunt.registerTask('test', ['spec'])
