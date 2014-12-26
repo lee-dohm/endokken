@@ -1,4 +1,8 @@
 .property{id: @id}
   .signature
     %code!= @signature
+    %a{href: "##{@id}"}
+      %span.octicon.octicon-link
+    %a{href: @srcUrl}
+      %span.octicon.octicon-file-code
   .description!= @summary
