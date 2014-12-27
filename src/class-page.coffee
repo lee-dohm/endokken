@@ -100,28 +100,3 @@ class ClassPage extends Template
   parameters: (method) ->
     names = (name for {name} in method.arguments)
     names.join(', ')
-
-
-
-
-  instanceMethodDetails: (method) ->
-    method.signature = @signature(method)
-    method.description = @markdownify(method.description)
-    method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
-    method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
-    Template.render('instance-method-details', method)
-
-  instanceMethodDetailsSection: ->
-    methods = (@instanceMethodDetails(method) for method in @object.instanceMethods)
-    if methods?.length > 0
-      Template.render('instance-method-detail-section', content: methods.join('\n'))
-
-  instanceMethodSummary: (method) ->
-    method.signature = @signature(method)
-    method.summary = @markdownify(method.summary)
-    Template.render('instance-method-summary', method)
-
-  instanceMethodSummarySection: ->
-    methods = (@instanceMethodSummary(method) for method in @object.instanceMethods)
-    if methods?.length > 0
-      Template.render('instance-method-summary-section', content: methods.join('\n'))
