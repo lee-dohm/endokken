@@ -2,7 +2,6 @@ Resolver = require './resolver'
 Template = require './template'
 
 # Public: Renders a page for a class.
-module.exports =
 class ClassPage extends Template
   @render: (locals) ->
     new this(locals).render()
@@ -99,3 +98,5 @@ class ClassPage extends Template
   parameters: (method) ->
     names = (name for {name} in method.arguments)
     names.join(', ')
+
+module.exports = ClassPage
