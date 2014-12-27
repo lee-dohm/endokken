@@ -41,13 +41,33 @@ class Cli
     Resolver.setMetadata(@metadata)
     @renderClass(klass) for _, klass of @metadata.classes
 
+  ###
+  Section: Handling Metadata
+  ###
+
   generateMetadata: ->
     rootPath = path.resolve('.')
 
     @metadata = tello.digest(donna.generateMetadata([rootPath]))
+    @dumpMetadata() if @args.metadata
+
+  dumpMetadata: ->
+    switch @args.metadata
+      when true then @writeMetadata('api.json')
+      else @writeMetadata(@args.metadata)
+
+  writeMetadata: (fileName) ->
+    text = JSON.stringify(@metadata, null, 2)
+    fs.writeFileSync(fileName, text)
 
   parseArguments: ->
-    @args = require('yargs').argv
+    @args = require('yargs')
+    @args = @args.options 'metadata',
+              alias: 'm'
+              default: false
+              describe: 'Dump metadata to a file or api.json if no filename given'
+    @args = @args.help('help').alias('help', '?')
+    @args = @args.argv
 
   renderClass: (klass) ->
     doc = Template.render('layout', content: ClassPage.render(klass), title: 'Endokken')
