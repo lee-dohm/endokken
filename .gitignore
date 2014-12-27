@@ -5,3 +5,5 @@ v8.log
 lib/
 *.js
 .node-version
+docs/
+static/base.css

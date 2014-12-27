@@ -32,6 +32,10 @@ class Resolver
   @setMetadata: (metadata) ->
     @getInstance().metadata = metadata
 
+  ###
+  Section: Default
+  ###
+
   # Public: Initializes the resolver using the project `metadata`.
   #
   # It also initializes the basic MDN references.

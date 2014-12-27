@@ -24,7 +24,7 @@ module.exports = (grunt) ->
           failOnError: true
 
       less:
-        command: './node_modules/less/bin/lessc ./stylesheets/base.less > ./base.css'
+        command: './node_modules/less/bin/lessc ./stylesheets/base.less > ./static/base.css'
         options:
           stdout: true
           stderr: true
