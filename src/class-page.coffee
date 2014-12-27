@@ -39,7 +39,7 @@ class ClassPage extends Template
     method.id = "#{options.type}-#{method.name}"
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
-    method.description = @resolveReferences(@markdownify(method.description))
+    method.description = @markdownify(@resolveReferences(method.description))
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
     Template.render('method', method)
@@ -48,7 +48,7 @@ class ClassPage extends Template
     property.id = "#{options.type}-#{property.name}"
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
-    property.description = @resolveReferences(@markdownify(property.description))
+    property.description = @markdownify(@resolveReferences(property.description))
     Template.render('property', property)
 
   signature: (method) ->
@@ -63,11 +63,12 @@ class ClassPage extends Template
 
   descriptionSection: ->
     if @object.description
-      description = @resolveReferences(@markdownify(@object.description))
+      description = @markdownify(@resolveReferences(@object.description))
       Template.render('description-section', description: description)
 
   resolveReferences: (text) ->
-    text.replace /\{\S*\}/g, (match) =>
+    text.replace /`?\{\S*\}`?/g, (match) =>
+      return match if match.match(/^`.*`$/)
       @resolveReference(match)
 
   resolveReference: (ref) ->
@@ -82,8 +83,8 @@ class ClassPage extends Template
     Template.render('parameter-block-table', rows: rows.join('\n'))
 
   parameterRow: (parameter) ->
-    parameter.description = @markdownify(parameter.description, noParagraph: true)
     parameter.description = @resolveReferences(parameter.description)
+    parameter.description = @markdownify(parameter.description, noParagraph: true)
     Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->
@@ -91,8 +92,8 @@ class ClassPage extends Template
     Template.render('return-value-block-table', rows: rows.join('\n'))
 
   returnValueRow: (returnValue) ->
-    returnValue.description = @markdownify(returnValue.description, noParagraph: true)
     returnValue.description = @resolveReferences(returnValue.description)
+    returnValue.description = @markdownify(returnValue.description, noParagraph: true)
     Template.render('return-value-block-row', returnValue)
 
   parameters: (method) ->

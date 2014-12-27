@@ -58,8 +58,8 @@ class Resolver
   #
   # Returns a {String} containing the original text if no match is found.
   # Returns an {Object} if a match is found that contains the following fields:
-  #     * `name` Link text {String}.
-  #     * `url` Link URL {String}.
+  # * `name` Link text {String}.
+  # * `url` Link URL {String}.
   resolve: (text) ->
     itemText = text.replace(/\{(.*)\}/, '$1')
 
