@@ -76,6 +76,14 @@ describe 'Resolver', ->
       expect(resolver.resolve('.foo').name).toEqual '.foo'
       expect(resolver.resolve('.foo').url).toEqual '#static-foo'
 
+    it 'resolves local static items', ->
+      expect(resolver.resolve('{.foo}').name).toEqual '.foo'
+      expect(resolver.resolve('{.foo}').url).toEqual '#static-foo'
+
     it 'resolves local instance items', ->
       expect(resolver.resolve('::foo').name).toEqual '::foo'
       expect(resolver.resolve('::foo').url).toEqual '#instance-foo'
+
+    it 'resolves local instance items with curly braces', ->
+      expect(resolver.resolve('{::foo}').name).toEqual '::foo'
+      expect(resolver.resolve('{::foo}').url).toEqual '#instance-foo'

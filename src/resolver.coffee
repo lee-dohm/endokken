@@ -24,6 +24,14 @@ mozillaBaseUrl = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 #     * Static method - links to `baseUrl/ClassName/methodName`
 #     * Instance method - links to `baseUrl/ClassName/methodName`
 class Resolver
+  instance = null
+
+  @getInstance: ->
+    instance ?= new this({})
+
+  @setMetadata: (metadata) ->
+    @getInstance().metadata = metadata
+
   # Public: Initializes the resolver using the project `metadata`.
   #
   # It also initializes the basic MDN references.
@@ -49,19 +57,19 @@ class Resolver
   #     * `name` Link text {String}.
   #     * `url` Link URL {String}.
   resolve: (text) ->
-    actualItem = text.replace(/\{(.*)\}/, '$1')
+    itemText = text.replace(/\{(.*)\}/, '$1')
 
-    if actualItem.indexOf('.') isnt -1
+    if itemText.indexOf('.') isnt -1
       type = 'static'
-      [klass, item] = actualItem.split('.')
-    else if actualItem.indexOf('::') isnt -1
+      [klass, item] = itemText.split('.')
+    else if itemText.indexOf('::') isnt -1
       type = 'instance'
-      [klass, item] = actualItem.split('::')
+      [klass, item] = itemText.split('::')
 
     switch type
-      when 'static' then @resolveStatic(klass, item, text)
-      when 'instance' then @resolveInstance(klass, item, text)
-      else @resolveClass(actualItem, text)
+      when 'static' then @resolveStatic(klass, item, itemText)
+      when 'instance' then @resolveInstance(klass, item, itemText)
+      else @resolveClass(itemText, text)
 
   # Private: Resolves a reference to a static item.
   #

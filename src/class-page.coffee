@@ -1,5 +1,6 @@
 _ = require 'underscore-plus'
 
+Resolver = require './resolver'
 Template = require './template'
 
 # Public: Renders a page for a class.
@@ -41,7 +42,7 @@ class ClassPage extends Template
     method.id = "#{options.type}-#{_.dasherize(method.name)}"
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
-    method.description = @markdownify(method.description)
+    method.description = @resolveReferences(@markdownify(method.description))
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
     Template.render('method', method)
@@ -50,6 +51,7 @@ class ClassPage extends Template
     property.id = "#{options.type}-#{_.dasherize(property.name)}"
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
+    property.description = @resolveReferences(@markdownify(property.description))
     Template.render('property', property)
 
   signature: (method) ->
@@ -65,6 +67,42 @@ class ClassPage extends Template
   descriptionSection: ->
     if @object.description
       Template.render('description-section', description: @markdownify(@object.description))
+
+  resolveReferences: (text) ->
+    text.replace /\{\S*\}/g, (match) =>
+      @resolveReference(match)
+
+  resolveReference: (ref) ->
+    result = Resolver.getInstance().resolve(ref)
+    if typeof result is 'string'
+      result
+    else
+      Template.render('reference', result)
+
+  parameterBlock: (method) ->
+    rows = (@parameterRow(parameter) for parameter in method.arguments)
+    Template.render('parameter-block-table', rows: rows.join('\n'))
+
+  parameterRow: (parameter) ->
+    parameter.description = @markdownify(parameter.description, noParagraph: true)
+    parameter.description = @resolveReferences(parameter.description)
+    Template.render('parameter-block-row', parameter)
+
+  returnValueBlock: (method) ->
+    rows = (@returnValueRow(returnValue) for returnValue in method.returnValues)
+    Template.render('return-value-block-table', rows: rows.join('\n'))
+
+  returnValueRow: (returnValue) ->
+    returnValue.description = @markdownify(returnValue.description, noParagraph: true)
+    returnValue.description = @resolveReferences(returnValue.description)
+    Template.render('return-value-block-row', returnValue)
+
+  parameters: (method) ->
+    names = (name for {name} in method.arguments)
+    names.join(', ')
+
+
+
 
   instanceMethodDetails: (method) ->
     method.signature = @signature(method)
@@ -87,23 +125,3 @@ class ClassPage extends Template
     methods = (@instanceMethodSummary(method) for method in @object.instanceMethods)
     if methods?.length > 0
       Template.render('instance-method-summary-section', content: methods.join('\n'))
-
-  parameterBlock: (method) ->
-    rows = (@parameterRow(parameter) for parameter in method.arguments)
-    Template.render('parameter-block-table', rows: rows.join('\n'))
-
-  parameterRow: (parameter) ->
-    parameter.description = @markdownify(parameter.description, noParagraph: true)
-    Template.render('parameter-block-row', parameter)
-
-  returnValueBlock: (method) ->
-    rows = (@returnValueRow(returnValue) for returnValue in method.returnValues)
-    Template.render('return-value-block-table', rows: rows.join('\n'))
-
-  returnValueRow: (returnValue) ->
-    returnValue.description = @markdownify(returnValue.description, noParagraph: true)
-    Template.render('return-value-block-row', returnValue)
-
-  parameters: (method) ->
-    names = (name for {name} in method.arguments)
-    names.join(', ')
