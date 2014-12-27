@@ -16,7 +16,6 @@ Resolver = require './resolver'
 # ```coffee
 # Template.render('some-template', foo: 'bar')
 # ```
-module.exports =
 class Template
   @markedOptions:
     gfm: true
@@ -83,3 +82,5 @@ class Template
       path.join(path.dirname(__dirname), 'templates', templatePath)
     else
       templatePath
+
+module.exports = Template
