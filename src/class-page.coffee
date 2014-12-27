@@ -1,4 +1,5 @@
-Resolver = require './resolver'
+_ = require 'underscore-plus'
+
 Template = require './template'
 
 # Public: Renders a page for a class.
@@ -7,6 +8,7 @@ class ClassPage extends Template
     new this(locals).render()
 
   constructor: (@object) ->
+    console.log("Class: #{@object.name}")
     locals = @object
     locals.classInfoSection = @classInfoSection()
     locals.descriptionSection = @descriptionSection()
@@ -17,25 +19,36 @@ class ClassPage extends Template
     super('class-page', locals)
 
   sections: ->
-    (@section(section) for section in @object.sections).join('\n')
+    if @object.sections.length > 0
+      (@section(section) for section in @object.sections).join('\n')
+    else
+      @section({name: null})
 
   section: (section) ->
-    classProps = (prop for prop in @object.classProperties when prop.sectionName is section.name)
-    section.classProperties = (@property(prop, type: 'static') for prop in classProps).join('\n')
+    console.log("  Section: #{section.name}")
 
-    props = (prop for prop in @object.instanceProperties when prop.sectionName is section.name)
-    section.properties = (@property(prop, type: 'instance') for prop in props).join('\n')
+    props = _.filter @object.classProperties, (prop) -> prop.sectionName is section.name
+    props = _.map props, (prop) => @property(prop, type: 'static')
+    section.classProperties = props.join('\n')
 
-    classMethods = (method for method in @object.classMethods when method.sectionName is section.name)
-    section.classMethods = (@method(method, type: 'static') for method in classMethods).join('\n')
+    props = _.filter @object.instanceProperties, (prop) -> prop.sectionName is section.name
+    props = _.map props, (prop) => @property(prop, type: 'instance')
+    section.properties = props.join('\n')
 
-    methods = (method for method in @object.instanceMethods when method.sectionName is section.name)
-    section.methods = (@method(method, type: 'instance') for method in methods).join('\n')
+    methods = _.filter @object.classMethods, (method) -> method.sectionName is section.name
+    methods = _.map methods, (method) => @method(method, type: 'static')
+    section.classMethods = methods.join('\n')
 
-    section.description = @markdownify(section.description)
+    methods = _.filter @object.instanceMethods, (method) -> method.sectionName is section.name
+    methods = _.map methods, (method) => @method(method, type: 'instance')
+    section.methods = methods.join('\n')
+
+    section.description = @markdownify(@resolveReferences(section.description))
     Template.render('section', section)
 
   method: (method, options) ->
+    console.log("    Method: #{method.name}")
+
     method.id = "#{options.type}-#{method.name}"
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
@@ -45,6 +58,8 @@ class ClassPage extends Template
     Template.render('method', method)
 
   property: (property, options) ->
+    console.log("    Property: #{property.name}")
+
     property.id = "#{options.type}-#{property.name}"
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
@@ -65,18 +80,6 @@ class ClassPage extends Template
     if @object.description
       description = @markdownify(@resolveReferences(@object.description))
       Template.render('description-section', description: description)
-
-  resolveReferences: (text) ->
-    text.replace /`?\{\S*\}`?/g, (match) =>
-      return match if match.match(/^`.*`$/)
-      @resolveReference(match)
-
-  resolveReference: (ref) ->
-    result = Resolver.getInstance().resolve(ref)
-    if typeof result is 'string'
-      result
-    else
-      Template.render('reference', result)
 
   parameterBlock: (method) ->
     rows = (@parameterRow(parameter) for parameter in method.arguments)

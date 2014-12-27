@@ -5,6 +5,8 @@ hamlc = require 'haml-coffee'
 highlightjs = require 'highlight.js'
 marked = require 'marked'
 
+Resolver = require './resolver'
+
 # Public: Used to render a HAML template into an HTML document.
 #
 # ## Examples
@@ -19,9 +21,15 @@ class Template
   @markedOptions:
     gfm: true
     highlight: (code) ->
-      "<div class=\"hljs\">#{highlightjs.highlightAuto(code).value}</div>"
+      Template.render('highlight', content: highlightjs.highlightAuto(code).value)
     smartypants: true
 
+  # Public: Renders the `template` using `locals`.
+  #
+  # * `template` {String} name of the template to use.
+  # * `locals` {Object} containing the locals to use in the template.
+  #
+  # Returns a {String} containing the rendered tepmlate.
   @render: (template, locals) ->
     new this(template, locals).render()
 
@@ -32,11 +40,6 @@ class Template
   constructor: (template, @locals) ->
     @templatePath = @normalizeTemplatePath(template)
 
-  markdownify: (content, options = {}) ->
-    output = marked(content, Template.markedOptions)
-    output = @stripParagraphTags(output) if options.noParagraph
-    output
-
   # Public: Renders the page.
   #
   # Returns a {String} containing the rendered HTML.
@@ -46,6 +49,24 @@ class Template
     content = template(@locals)
 
     content.replace(/\n\n/, '\n')
+
+  markdownify: (content, options = {}) ->
+    return '' unless content
+    output = marked(content, Template.markedOptions)
+    output = @stripParagraphTags(output) if options.noParagraph
+    output
+
+  resolveReferences: (text) ->
+    text?.replace /`?\{\S*\}`?/g, (match) =>
+      return match if match.match(/^`.*`$/)
+      @resolveReference(match)
+
+  resolveReference: (ref) ->
+    result = Resolver.getInstance().resolve(ref)
+    if typeof result is 'string'
+      result
+    else
+      Template.render('reference', result)
 
   stripParagraphTags: (content) ->
     content.replace(/<\/?p>/g, '')

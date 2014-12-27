@@ -38,8 +38,8 @@ class Cli
   generateDocumentation: ->
     @buildDocsDirectory()
 
-    Resolver.setMetadata(@metadata)
-    @renderClass(klass) for _, klass of @metadata.classes
+    Resolver.setMetadata(@digestedMetadata)
+    @renderClass(klass) for _, klass of @digestedMetadata.classes
 
   ###
   Section: Handling Metadata
@@ -48,16 +48,17 @@ class Cli
   generateMetadata: ->
     rootPath = path.resolve('.')
 
-    @metadata = tello.digest(donna.generateMetadata([rootPath]))
+    @metadata = donna.generateMetadata([rootPath])
+    @digestedMetadata = tello.digest(@metadata)
     @dumpMetadata() if @args.metadata
 
   dumpMetadata: ->
     switch @args.metadata
-      when true then @writeMetadata('api.json')
-      else @writeMetadata(@args.metadata)
+      when true then @writeMetadata('api.json', @digestedMetadata)
+      else @writeMetadata(@args.metadata, @digestedMetadata)
 
-  writeMetadata: (fileName) ->
-    text = JSON.stringify(@metadata, null, 2)
+  writeMetadata: (fileName, metadata) ->
+    text = JSON.stringify(metadata, null, 2)
     fs.writeFileSync(fileName, text)
 
   parseArguments: ->
