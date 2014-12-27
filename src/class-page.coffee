@@ -1,5 +1,3 @@
-_ = require 'underscore-plus'
-
 Resolver = require './resolver'
 Template = require './template'
 
@@ -39,7 +37,7 @@ class ClassPage extends Template
     Template.render('section', section)
 
   method: (method, options) ->
-    method.id = "#{options.type}-#{_.dasherize(method.name)}"
+    method.id = "#{options.type}-#{method.name}"
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
     method.description = @resolveReferences(@markdownify(method.description))
@@ -48,7 +46,7 @@ class ClassPage extends Template
     Template.render('method', method)
 
   property: (property, options) ->
-    property.id = "#{options.type}-#{_.dasherize(property.name)}"
+    property.id = "#{options.type}-#{property.name}"
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
     property.description = @resolveReferences(@markdownify(property.description))
@@ -66,7 +64,8 @@ class ClassPage extends Template
 
   descriptionSection: ->
     if @object.description
-      Template.render('description-section', description: @markdownify(@object.description))
+      description = @resolveReferences(@markdownify(@object.description))
+      Template.render('description-section', description: description)
 
   resolveReferences: (text) ->
     text.replace /\{\S*\}/g, (match) =>
