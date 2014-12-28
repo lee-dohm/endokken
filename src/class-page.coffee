@@ -12,11 +12,23 @@ class ClassPage extends Template
     locals = @object
     locals.classInfoSection = @classInfoSection()
     locals.descriptionSection = @descriptionSection()
+    locals.examplesSection = @examplesSection()
     locals.sections = @sections()
 
     @title = @object.name
 
     super('class-page', locals)
+
+  examplesSection: ->
+    return '' unless @object.examples
+
+    console.log("  Examples")
+    examples = (@example(example) for example in @object.examples).join('\n')
+    Template.render('examples', examples: examples)
+
+  example: (example) ->
+    example.raw = @markdownify(example.raw)
+    Template.render('example', example)
 
   sections: ->
     sections = @object.sections

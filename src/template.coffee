@@ -19,8 +19,8 @@ Resolver = require './resolver'
 class Template
   @markedOptions:
     gfm: true
-    highlight: (code) ->
-      Template.render('highlight', content: highlightjs.highlightAuto(code).value)
+    highlight: (code, lang) ->
+      Template.render('highlight', content: highlightjs.highlight(lang, code).value)
     smartypants: true
 
   # Public: Renders the `template` using `locals`.
