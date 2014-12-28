@@ -19,10 +19,9 @@ class ClassPage extends Template
     super('class-page', locals)
 
   sections: ->
-    if @object.sections.length > 0
-      (@section(section) for section in @object.sections).join('\n')
-    else
-      @section({name: null})
+    sections = @object.sections
+    sections.push({name: null})
+    (@section(section) for section in sections).join('\n')
 
   section: (section) ->
     console.log("  Section: #{section.name}")
@@ -44,7 +43,11 @@ class ClassPage extends Template
     section.methods = methods.join('\n')
 
     section.description = @markdownify(@resolveReferences(section.description))
-    Template.render('section', section)
+
+    if section.classProperties.length > 0 or section.properties.length > 0 or
+       section.classMethods.length > 0 or section.methods.length > 0 or
+       section.description.length > 0
+      Template.render('section', section)
 
   method: (method, options) ->
     console.log("    Method: #{method.name}")
