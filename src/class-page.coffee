@@ -38,21 +38,11 @@ class ClassPage extends Template
   section: (section) ->
     console.log("  Section: #{section.name}")
 
-    props = _.filter @object.classProperties, (prop) -> prop.sectionName is section.name
-    props = _.map props, (prop) => @property(prop, type: 'static')
-    section.classProperties = props.join('\n')
+    section.classProperties = @processProperties(@object.classProperties, section.name, 'static')
+    section.properties = @processProperties(@object.instanceProperties, section.name, 'instance')
 
-    props = _.filter @object.instanceProperties, (prop) -> prop.sectionName is section.name
-    props = _.map props, (prop) => @property(prop, type: 'instance')
-    section.properties = props.join('\n')
-
-    methods = _.filter @object.classMethods, (method) -> method.sectionName is section.name
-    methods = _.map methods, (method) => @method(method, type: 'static')
-    section.classMethods = methods.join('\n')
-
-    methods = _.filter @object.instanceMethods, (method) -> method.sectionName is section.name
-    methods = _.map methods, (method) => @method(method, type: 'instance')
-    section.methods = methods.join('\n')
+    section.classMethods = @processMethods(@object.classMethods, section.name, 'static')
+    section.methods = @processMethods(@object.instanceMethods, section.name, 'instance')
 
     section.description = @markdownify(@resolveReferences(section.description))
 
@@ -60,6 +50,16 @@ class ClassPage extends Template
        section.classMethods.length > 0 or section.methods.length > 0 or
        section.description.length > 0
       Template.render('section', section)
+
+  processMethods: (methods, sectionName, type) ->
+    methods = _.filter methods, (method) -> method.sectionName is sectionName
+    methods = _.map methods, (method) => @method(method, type: type)
+    methods.join('\n')
+
+  processProperties: (properties, sectionName, type) ->
+    props = _.filter properties, (prop) -> prop.sectionName is sectionName
+    props = _.map props, (prop) => @property(prop, type: type)
+    props.join('\n')
 
   method: (method, options) ->
     console.log("    Method: #{method.name}")
