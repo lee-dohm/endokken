@@ -74,10 +74,19 @@ class Cli
     @buildDocsDirectory()
 
     Resolver.setMetadata(@digestedMetadata)
+    @getNavItems(@digestedMetadata)
     @renderClass(klass) for _, klass of @digestedMetadata.classes
 
+  getNavItems: (metadata) ->
+    navItems = (name for name, _ of metadata.classes)
+    items = (Template.render('nav-item', name: item, url: item) for item in navItems).join('\n')
+    @navigation = Template.render('navigation', items: items)
+
   renderClass: (klass) ->
-    doc = Template.render('layout', content: ClassPage.render(klass), title: 'Endokken')
+    doc = Template.render 'layout',
+                          content: ClassPage.render(klass)
+                          title: 'Endokken'
+                          navigation: @navigation
     fs.writeFileSync("./docs/#{klass.name}", doc)
 
 module.exports = Cli

@@ -1,11 +1,12 @@
-.method-block{id: @id}
-  .signature
-    %code!= @signature
-    %a{href: "##{@id}"}
-      %span.octicon.octicon-link
-    %a{href: @srcUrl}
-      %span.octicon.octicon-file-code
-  .description
+.panel.panel-primary.method-block{id: @id}
+  .panel-heading
+    .panel-title
+      != @signature
+      %a{href: "##{@id}"}
+        %span.octicon.octicon-link
+      %a{href: @srcUrl}
+        %span.octicon.octicon-file-code
+  .panel-body
     != @description
     != @parameterBlock
     != @returnValueBlock

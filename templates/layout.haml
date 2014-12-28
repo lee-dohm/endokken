@@ -8,11 +8,17 @@
     %link{rel: 'stylesheet', href: 'bootstrap.min.css', type: 'text/css'}
     %link{rel: 'stylesheet', href: 'base.css', type: 'text/css'}
   %body
-    .navigation
-      != @navigation
-    .content
-      != @content
-    .footer
-      %small
-        Generated on #{(new Date).toString()} by
-        %a{href: 'https://github.com/lee-dohm/endokken'} endokken
+    .container
+      .row
+        .col-md-2.navigation
+          != @navigation
+        .col-md-10
+          .content
+            != @content
+          .footer.text-center
+            %small
+              Generated on #{(new Date).toString()} by
+              %a{href: 'https://github.com/lee-dohm/endokken'} endokken
+
+    %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'}
+    %script{src: 'bootstrap.min.js'}
