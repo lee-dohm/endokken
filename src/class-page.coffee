@@ -77,6 +77,8 @@ class ClassPage extends Template
     if type is 'static' then '.' else '::'
 
   classInfoSection: ->
+    superClass = "{#{@object.superClass ? 'Object'}}"
+    @object.superClass = @resolveReferences(superClass)
     Template.render('class-info', @object)
 
   descriptionSection: ->

@@ -113,7 +113,7 @@ class Resolver
   resolveClass: (klass, text) ->
     switch
       when @metadata.classes[klass]
-        { name: klass, url: "class/#{klass}"}
+        { name: klass, url: klass}
       when @map[klass]
         { name: klass, url: @map[klass] }
       else text
