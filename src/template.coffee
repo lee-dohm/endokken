@@ -9,12 +9,22 @@ Resolver = require './resolver'
 
 # Public: Used to render a HAML template into an HTML document.
 #
+# It uses [haml-coffee](https://www.npmjs.com/package/haml-coffee) to render the HAML template into
+# HTML. See the documentation for haml-coffee for full details on the dialect in use.
+#
 # ## Examples
 #
-# Basic usage.
+# Basic usage:
 #
 # ```coffee
 # Template.render('some-template', foo: 'bar')
+# ```
+#
+# Templates can also be used to render portions of pages and then the results passed in:
+#
+# ```coffee
+# section = Template.render('page-section', content: 'Some content to include')
+# fullPage = Template.render('full-page', section: section)
 # ```
 class Template
   @markedOptions:
@@ -49,12 +59,26 @@ class Template
 
     content.replace(/\n\n/, '\n')
 
+  # Public: Converts the supplied Markdown content into HTML.
+  #
+  # * `content` Markdown content {String}.
+  # * `options` {Object}
+  #     * `noParagraph` If `true` it will strip the outermost HTML paragraph tags.
+  #
+  # Returns a {String} containing the generated HTML.
   markdownify: (content, options = {}) ->
     return '' unless content
     output = marked(content, Template.markedOptions)
     output = @stripParagraphTags(output) if options.noParagraph
     output
 
+  # Public: Resolves references to other documentation.
+  #
+  # Uses {Resolver} to convert any documentation references found.
+  #
+  # * `text` {String} to search for references.
+  #
+  # Returns a {String} with all documentation references turned into links.
   resolveReferences: (text) ->
     text?.replace /`?\{\S*\}`?/g, (match) =>
       return match if match.match(/^`.*`$/)
