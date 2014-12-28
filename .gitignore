@@ -3,7 +3,8 @@ node_modules/
 npm-debug.log
 v8.log
 lib/
-*.js
 .node-version
 docs/
 static/base.css
+static/bootstrap*
+static/glyphicons*

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "prepublish": "grunt clean lint coffee"
+    "prepublish": "grunt clean lint"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "jasmine-focused": "1.x",
     "jasmine-json": "~0.0",
     "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-copy": "~0.7.0",
     "grunt-cli": "~0.1.8",
     "grunt": "~0.4.1",
     "grunt-shell": "~0.2.2",
