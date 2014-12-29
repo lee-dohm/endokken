@@ -20,6 +20,9 @@ Template = require './template'
 class Cli
   # Public: Parses the command-line arguments.
   constructor: ->
+    packagePath = path.join(path.dirname(__dirname), 'package.json')
+    packageInfo = JSON.parse(fs.readFileSync(packagePath).toString())
+    @version = packageInfo.version
     @parseArguments()
 
   # Public: Executes the program.
@@ -109,6 +112,7 @@ class Cli
                           content: ClassPage.render(klass)
                           title: 'Endokken'
                           navigation: @navigation
+                          version: @version
     fs.writeFileSync("./docs/#{klass.name}", doc)
 
 module.exports = Cli
