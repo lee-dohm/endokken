@@ -23,13 +23,12 @@ These are just guidelines, not rules, use your best judgement and feel free to p
 * End files with a newline.
 * Place requires in the following order:
     * Built in Node Modules (such as `path`)
-    * Built in Atom and Atom Shell Modules (such as `atom`, `shell`)
+    * Other Node Modules (such as `donna`, `tello`)
     * Local Modules (using relative paths)
 * Place class properties in the following order:
     * Class methods and properties (methods starting with a `@`)
     * Instance methods and properties
 * Avoid platform-dependent code:
-    * Use `require('atom').fs.getHomeDirectory()` to get the home directory.
     * Use `path.join()` to concatenate filenames.
     * Use `os.tmpdir()` rather than `/tmp` when you need to reference the temporary directory.
 * Using a plain `return` when returning explicitly at the end of a function.
@@ -55,6 +54,7 @@ These are just guidelines, not rules, use your best judgement and feel free to p
     * :white_check_mark: `:white_check_mark:` when adding tests
     * :lock: `:lock:` when dealing with security
     * :arrow_up: `:arrow_up:` when upgrading dependencies
+    * :arrow_down: `:arrow_down:` when downgrading dependencies
 
 ## CoffeeScript Styleguide
 
