@@ -1,10 +1,12 @@
 @import "./hljs-railscasts";
 @import "./octicons";
 
+@monospace-fonts: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
+
 code {
   background-color: lighten(#337ab7, 45%);
   color: #337ab7;
-  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: @monospace-fonts;
 }
 
 .footer {
@@ -23,5 +25,5 @@ code {
 }
 
 .signature {
-  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: @monospace-fonts;
 }
