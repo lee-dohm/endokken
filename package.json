@@ -8,8 +8,8 @@
     "parse": "src/parse.coffee"
   },
   "scripts": {
-    "test": "grunt test",
-    "prepublish": "grunt clean lint"
+    "test": "grunt spec",
+    "prepublish": "grunt clean lint spec less copy"
   },
   "repository": {
     "type": "git",

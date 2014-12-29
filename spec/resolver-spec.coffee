@@ -58,11 +58,11 @@ describe 'Resolver', ->
       resolver.add('Atom', 'https://example.com/Atom')
 
       expect(resolver.resolve('Atom').name).toEqual 'Atom'
-      expect(resolver.resolve('Atom').url).toEqual 'class/Atom'
+      expect(resolver.resolve('Atom').url).toEqual 'Atom'
 
     it 'resolves classes', ->
       expect(resolver.resolve('Atom').name).toEqual 'Atom'
-      expect(resolver.resolve('Atom').url).toEqual 'class/Atom'
+      expect(resolver.resolve('Atom').url).toEqual 'Atom'
 
     it 'resolves static items', ->
       expect(resolver.resolve('GitRepository.open').name).toEqual 'GitRepository.open'
