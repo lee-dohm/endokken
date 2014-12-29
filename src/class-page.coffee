@@ -12,18 +12,18 @@ class ClassPage extends Template
     locals = @object
     locals.classInfoSection = @classInfoSection()
     locals.descriptionSection = @descriptionSection()
-    locals.examplesSection = @examplesSection()
+    locals.examplesSection = @examplesSection(@object)
     locals.sections = @sections()
 
     @title = @object.name
 
     super('class-page', locals)
 
-  examplesSection: ->
-    return '' unless @object.examples
+  examplesSection: (object) ->
+    return '' unless object.examples
 
     console.log("  Examples")
-    examples = (@example(example) for example in @object.examples).join('\n')
+    examples = (@example(example) for example in object.examples).join('\n')
     Template.render('examples', examples: examples)
 
   example: (example) ->
@@ -68,6 +68,7 @@ class ClassPage extends Template
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
     method.description = @markdownify(@resolveReferences(method.description))
+    method.examples = @examplesSection(method)
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
     Template.render('method', method)
@@ -79,6 +80,7 @@ class ClassPage extends Template
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
     property.description = @markdownify(@resolveReferences(property.description))
+    property.examples = @examplesSection(property)
     Template.render('property', property)
 
   signature: (method) ->

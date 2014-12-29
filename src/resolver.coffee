@@ -52,6 +52,12 @@ class Resolver
   #
   # * `text` {String} containing a documentation reference.
   #
+  # ## Examples
+  #
+  # ```sh
+  # $ test
+  # ```
+  #
   # Returns a {String} containing the original text if no match is found.
   # Returns an {Object} if a match is found that contains the following fields:
   # * `name` Link text {String}.
