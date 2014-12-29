@@ -82,13 +82,6 @@ class Cli
     @renderClass(klass) for _, klass of @digestedMetadata.classes
     @renderFile(file) for file in @docFiles()
 
-  renderFile: (file) ->
-    doc = Template.render 'layout',
-                          content: FilePage.render(file)
-                          title: 'Endokken'
-                          navigation: @navigation
-    fs.writeFileSync("./docs/#{path.basename(file, path.extname(file))}", doc)
-
   docFiles: ->
     (file for file in fs.readdirSync('.') when file.match(/\.md$/))
 
@@ -107,12 +100,18 @@ class Cli
     files = @getNavFiles('.')
     @navigation = "#{classes}\n#{files}"
 
-  renderClass: (klass) ->
+  render: (content, filePath) ->
     doc = Template.render 'layout',
-                          content: ClassPage.render(klass)
+                          content: content
                           title: 'Endokken'
                           navigation: @navigation
                           version: @version
-    fs.writeFileSync("./docs/#{klass.name}", doc)
+    fs.writeFileSync(filePath, doc)
+
+  renderFile: (file) ->
+    @render(FilePage.render(file), "./docs/#{path.basename(file, path.extname(file))}")
+
+  renderClass: (klass) ->
+    @render(ClassPage.render(klass), "./docs/#{klass.name}")
 
 module.exports = Cli
