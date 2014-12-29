@@ -6,7 +6,7 @@ Generates HTML documentation for your Atom package from [AtomDoc][atomdoc] comme
 
 You can simply run the `endokken` command from the root directory of your Atom package and it will generate HTML documentation in the `./docs` directory.
 
-```shell
+```sh
 $ endokken
 ```
 

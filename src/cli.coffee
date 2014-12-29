@@ -5,6 +5,7 @@ donna = require 'donna'
 tello = require 'tello'
 
 ClassPage = require './class-page'
+FilePage = require './file-page'
 Resolver = require './resolver'
 Template = require './template'
 
@@ -76,11 +77,32 @@ class Cli
     Resolver.setMetadata(@digestedMetadata)
     @getNavItems(@digestedMetadata)
     @renderClass(klass) for _, klass of @digestedMetadata.classes
+    @renderFile(file) for file in @docFiles()
 
-  getNavItems: (metadata) ->
+  renderFile: (file) ->
+    doc = Template.render 'layout',
+                          content: FilePage.render(file)
+                          title: 'Endokken'
+                          navigation: @navigation
+    fs.writeFileSync("./docs/#{path.basename(file, path.extname(file))}", doc)
+
+  docFiles: ->
+    (file for file in fs.readdirSync('.') when file.match(/\.md$/))
+
+  getNavClasses: (metadata) ->
     navItems = (name for name, _ of metadata.classes)
     items = (Template.render('nav-item', name: item, url: item) for item in navItems).join('\n')
-    @navigation = Template.render('navigation', items: items)
+    Template.render('navigation', title: 'Classes', items: items)
+
+  getNavFiles: (pathName) ->
+    files = (path.basename(file, path.extname(file)) for file in @docFiles())
+    items = (Template.render('nav-item', name: file, url: file) for file in files).join('\n')
+    Template.render('navigation', title: 'Files', items: items)
+
+  getNavItems: (metadata) ->
+    classes = @getNavClasses(metadata)
+    files = @getNavFiles('.')
+    @navigation = "#{classes}\n#{files}"
 
   renderClass: (klass) ->
     doc = Template.render 'layout',
