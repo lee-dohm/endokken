@@ -27,7 +27,6 @@ Resolver = require './resolver'
 # fullPage = Template.render('full-page', section: section)
 # ```
 class Template
-  # Public: Options
   @markedOptions:
     gfm: true
     highlight: (code, lang) ->
