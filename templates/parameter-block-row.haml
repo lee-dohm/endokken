@@ -1,3 +1,6 @@
 %tr
-  %th= @name
+  %th
+    = @name
+    - if @isOptional
+      %span.label.label-info Optional
   %td!= @description

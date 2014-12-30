@@ -119,7 +119,11 @@ class ClassPage extends Template
     Template.render('return-value-block-row', returnValue)
 
   parameters: (method) ->
-    names = (name for {name} in method.arguments)
+    formatArgument = (argument) ->
+      opt = if argument.isOptional then '<sup>?</sup>' else ''
+      "#{argument.name}#{opt}"
+
+    names = (formatArgument(argument) for argument in method.arguments)
     names.join(', ')
 
 module.exports = ClassPage

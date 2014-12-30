@@ -36,7 +36,7 @@ class Template
   # Public: Renders the `template` using `locals`.
   #
   # * `template` {String} name of the template to use.
-  # * `locals` {Object} containing the locals to use in the template.
+  # * `locals` (optional) {Object} containing the locals to use in the template.
   #
   # Returns a {String} containing the rendered tepmlate.
   @render: (template, locals) ->
