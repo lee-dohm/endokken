@@ -118,7 +118,7 @@ class Resolver
   #     * `url` Link URL {String}.
   resolveClass: (klass, text) ->
     switch
-      when @metadata.classes[klass]
+      when @metadata?.classes?[klass]
         { name: klass, url: klass}
       when @map[klass]
         { name: klass, url: @map[klass] }

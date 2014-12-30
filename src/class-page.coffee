@@ -5,19 +5,21 @@ Template = require './template'
 # Public: Renders a page for a class.
 class ClassPage extends Template
   @render: (locals) ->
-    new this(locals).render()
+    new this().render(locals)
 
-  constructor: (@object) ->
+  constructor: () ->
+    super('class-page')
+
+  prepareLocals: (@object) ->
     console.log("Class: #{@object.name}")
-    locals = @object
-    locals.classInfoSection = @classInfoSection()
-    locals.descriptionSection = @descriptionSection()
-    locals.examplesSection = @examplesSection(@object)
-    locals.sections = @sections()
+    @object.classInfoSection = @classInfoSection()
+    @object.descriptionSection = @descriptionSection()
+    @object.examplesSection = @examplesSection(@object)
+    @object.sections = @sections()
 
-    @title = @object.name
-
-    super('class-page', locals)
+  render: (locals) ->
+    @prepareLocals(locals)
+    super(locals)
 
   examplesSection: (object) ->
     return '' unless object.examples

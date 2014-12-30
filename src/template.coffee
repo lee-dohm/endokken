@@ -40,22 +40,30 @@ class Template
   #
   # Returns a {String} containing the rendered tepmlate.
   @render: (template, locals) ->
-    new this(template, locals).render()
+    new this(template).render(locals)
 
   # Public: Creates a new `Template` object.
   #
   # * `template` Name {String} of the template to use to render the object.
-  # * `locals` {Object} of items to insert into the template
-  constructor: (template, @locals) ->
+  constructor: (template) ->
     @templatePath = @normalizeTemplatePath(template)
 
   # Public: Renders the page.
   #
+  # * `locals` {Object} of items to insert into the template
+  # * `options` {Object}
+  #     * `compiler` {Object} of `hamlc` compiler options
+  #     * `resolve` Resolves references in the listed fields in `locals`
+  #
   # Returns a {String} containing the rendered HTML.
-  render: ->
+  render: (locals, options = {}) ->
+    if options.resolve
+      for field in options.resolve
+        locals[field] = @resolveReferences(locals[field])
+
     haml = fs.readFileSync(@templatePath).toString()
-    template = hamlc.compile(haml)
-    content = template(@locals)
+    template = hamlc.compile(haml, options.compiler ? {})
+    content = template(locals)
 
     content.replace(/\n\n/, '\n')
 
@@ -112,6 +120,10 @@ class Template
   # Returns a path {String}.
   normalizeTemplatePath: (templatePath) ->
     templatePath += '.haml' if path.extname(templatePath) is ''
-    path.join(path.dirname(__dirname), 'templates', templatePath)
+
+    if templatePath.search(/\//) is -1
+      path.join(path.dirname(__dirname), 'templates', templatePath)
+    else
+      templatePath
 
 module.exports = Template
