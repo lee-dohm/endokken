@@ -63,7 +63,7 @@ class Template
   #
   # * `content` Markdown content {String}.
   # * `options` {Object}
-  #     * `noParagraph` If `true` it will strip the outermost HTML paragraph tags.
+  #     * `noParagraph` If `true` it will strip any HTML paragraph tags.
   #
   # Returns a {String} containing the generated HTML.
   markdownify: (content, options = {}) ->
@@ -88,7 +88,8 @@ class Template
   #
   # * `ref` {String} containing a documentation reference.
   #
-  # Returns the link {String} to the appropriate documentation.
+  # Returns the link {String} to the appropriate documentation if it is a valid reference.
+  # Returns the input {String} if the reference is invalid.
   resolveReference: (ref) ->
     result = Resolver.getInstance().resolve(ref)
     if typeof result is 'string'
@@ -111,10 +112,6 @@ class Template
   # Returns a path {String}.
   normalizeTemplatePath: (templatePath) ->
     templatePath += '.haml' if path.extname(templatePath) is ''
-
-    if templatePath.search /\//
-      path.join(path.dirname(__dirname), 'templates', templatePath)
-    else
-      templatePath
+    path.join(path.dirname(__dirname), 'templates', templatePath)
 
 module.exports = Template
