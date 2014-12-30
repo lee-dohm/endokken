@@ -84,6 +84,11 @@ class Template
       return match if match.match(/^`.*`$/)
       @resolveReference(match)
 
+  # Private: Resolves a single reference.
+  #
+  # * `ref` {String} containing a documentation reference.
+  #
+  # Returns the link {String} to the appropriate documentation.
   resolveReference: (ref) ->
     result = Resolver.getInstance().resolve(ref)
     if typeof result is 'string'
@@ -91,6 +96,11 @@ class Template
     else
       Template.render('reference', result)
 
+  # Private: Strips paragraph tags from the text.
+  #
+  # * `content` {String} to remove the tags from.
+  #
+  # Returns the {String} with the tags removed.
   stripParagraphTags: (content) ->
     content.replace(/<\/?p>/g, '')
 
