@@ -4,8 +4,7 @@
   "description": "Generates HTML documentation for your Atom package from AtomDoc comments.",
   "preferGlobal": true,
   "bin": {
-    "endokken": "src/endokken.coffee",
-    "parse": "src/parse.coffee"
+    "endokken": "bin/endokken"
   },
   "scripts": {
     "test": "grunt spec",
