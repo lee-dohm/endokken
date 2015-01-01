@@ -48,11 +48,14 @@ describe 'Template', ->
     it 'renders a template with locals', ->
       template = new Template(helper.getFixturePath('locals.haml'))
 
-      expect(template.render(test: 'foo')).toEqual '<p>foo</p>'
+      expect(template.render(test: 'foo')).toEqual 'foo'
 
-  # describe 'updating fields according to spec', ->
-  #   beforeEach ->
-  #     template = new Template(helper.getFixturePath('locals.haml'))
-  #
-  #   it 'resolves references', ->
-  #     expect(template.render(test: '{String}', resolve: ['test'])).toEqual '<a href="">String</a>'
+  describe 'updating fields according to spec', ->
+    beforeEach ->
+      template = new Template(helper.getFixturePath('locals.haml'))
+
+    it 'converts markdown', ->
+      expect(template.render({test: '*test*'}, markdown: ['test'])).toEqual '<p><em>test</em></p>\n'
+
+    it 'resolves references', ->
+      expect(template.render({test: '{String}'}, resolve: ['test'])).toEqual "<a class='reference' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String'>String</a>"

@@ -4,6 +4,7 @@ path = require 'path'
 hamlc = require 'haml-coffee'
 highlightjs = require 'highlight.js'
 marked = require 'marked'
+up = require 'underscore-plus'
 
 Resolver = require './resolver'
 
@@ -54,12 +55,17 @@ class Template
   # * `options` {Object}
   #     * `compiler` {Object} of `hamlc` compiler options
   #     * `resolve` Resolves references in the listed fields in `locals`
+  #     * `markdown` Converts the listed fields from Markdown to HTML
   #
   # Returns a {String} containing the rendered HTML.
   render: (locals, options = {}) ->
     if options.resolve
       for field in options.resolve
         locals[field] = @resolveReferences(locals[field])
+
+    if options.markdown
+      for field in options.markdown
+        locals[field] = @markdownify(locals[field])
 
     haml = fs.readFileSync(@templatePath).toString()
     template = hamlc.compile(haml, options.compiler ? {})
@@ -103,7 +109,8 @@ class Template
     if typeof result is 'string'
       result
     else
-      Template.render('reference', result)
+      template = new Template('reference')
+      template.render(result, compiler: {escapeAttributes: false})
 
   # Private: Strips paragraph tags from the text.
   #
