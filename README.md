@@ -17,7 +17,7 @@ Endokken also supports the following command-line options:
 
 ## Copyright
 
-Copyright &copy; 2014 by [Lee Dohm][lee-dohm]. See [LICENSE][license] for details.
+Copyright &copy; 2014-2015 by [Lee Dohm][lee-dohm]. See [LICENSE][license] for details.
 
 [atomdoc]: https://github.com/atom/atomdoc
 [lee-dohm]: http://www.lee-dohm.com
