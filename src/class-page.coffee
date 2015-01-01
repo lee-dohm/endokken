@@ -69,11 +69,11 @@ class ClassPage extends Template
     method.id = "#{options.type}-#{method.name}"
     method.type = options.type
     method.signature = "#{@signifier(options.type)}#{@signature(method)}"
-    method.description = @markdownify(@resolveReferences(method.description))
     method.examples = @examplesSection(method)
     method.parameterBlock = if method.arguments then @parameterBlock(method) else ''
     method.returnValueBlock = if method.returnValues then @returnValueBlock(method) else ''
-    Template.render('method', method)
+
+    Template.render('method', method, resolve: ['description'], markdown: ['description'])
 
   property: (property, options) ->
     console.log("    Property: #{property.name}")
@@ -81,9 +81,9 @@ class ClassPage extends Template
     property.id = "#{options.type}-#{property.name}"
     property.type = options.type
     property.signature = "#{@signifier(options.type)}#{property.name}"
-    property.description = @markdownify(@resolveReferences(property.description))
     property.examples = @examplesSection(property)
-    Template.render('property', property)
+
+    Template.render('property', property, resolve: ['description'], markdown: ['description'])
 
   signature: (method) ->
     parameters = if method.arguments then @parameters(method) else ''
@@ -93,14 +93,14 @@ class ClassPage extends Template
     if type is 'static' then '.' else '::'
 
   classInfoSection: ->
-    superClass = "{#{@object.superClass ? 'Object'}}"
-    @object.superClass = @resolveReferences(superClass)
-    Template.render('class-info', @object)
+    @object.superClass = "{#{@object.superClass ? 'Object'}}"
+    Template.render('class-info', @object, resolve: ['superClass'])
 
   descriptionSection: ->
     if @object.description
-      description = @markdownify(@resolveReferences(@object.description))
-      Template.render('description-section', description: description)
+      Template.render 'description-section', @object,
+        resolve: ['description']
+        markdown: ['description']
 
   parameterBlock: (method) ->
     rows = (@parameterRow(parameter) for parameter in method.arguments)

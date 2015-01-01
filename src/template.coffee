@@ -37,11 +37,15 @@ class Template
   # Public: Renders the `template` using `locals`.
   #
   # * `template` {String} name of the template to use.
-  # * `locals` (optional) {Object} containing the locals to use in the template.
+  # * `locals` {Object} containing the locals to use in the template.
+  # * `options` {Object}
+  #     * `compiler` {Object} of `hamlc` compiler options
+  #     * `markdown` Converts the listed fields from Markdown to HTML
+  #     * `resolve` Resolves references in the listed fields in `locals`
   #
   # Returns a {String} containing the rendered tepmlate.
-  @render: (template, locals) ->
-    new this(template).render(locals)
+  @render: (template, locals, options) ->
+    new this(template).render(locals, options)
 
   # Public: Creates a new `Template` object.
   #
@@ -54,8 +58,8 @@ class Template
   # * `locals` {Object} of items to insert into the template
   # * `options` {Object}
   #     * `compiler` {Object} of `hamlc` compiler options
-  #     * `resolve` Resolves references in the listed fields in `locals`
   #     * `markdown` Converts the listed fields from Markdown to HTML
+  #     * `resolve` Resolves references in the listed fields in `locals`
   #
   # Returns a {String} containing the rendered HTML.
   render: (locals, options = {}) ->
