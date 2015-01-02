@@ -41,6 +41,7 @@ class Template
   # * `options` {Object}
   #     * `compiler` {Object} of `hamlc` compiler options
   #     * `markdown` Converts the listed fields from Markdown to HTML
+  #     * `noParagraph` Strips the paragraph tags from fields converted from Markdown
   #     * `resolve` Resolves references in the listed fields in `locals`
   #
   # Returns a {String} containing the rendered tepmlate.
@@ -59,6 +60,7 @@ class Template
   # * `options` {Object}
   #     * `compiler` {Object} of `hamlc` compiler options
   #     * `markdown` Converts the listed fields from Markdown to HTML
+  #     * `noParagraph` Strips the paragraph tags from fields converted from Markdown
   #     * `resolve` Resolves references in the listed fields in `locals`
   #
   # Returns a {String} containing the rendered HTML.
@@ -69,10 +71,10 @@ class Template
 
     if options.markdown
       for field in options.markdown
-        locals[field] = @markdownify(locals[field])
+        locals[field] = @markdownify(locals[field], noParagraph: options.noParagraph)
 
     haml = fs.readFileSync(@templatePath).toString()
-    template = hamlc.compile(haml, options.compiler ? {})
+    template = hamlc.compile(haml, options.compiler ? {escapeAttributes: false})
     content = template(locals)
 
     content.replace(/\n\n/, '\n')
@@ -114,7 +116,7 @@ class Template
       result
     else
       template = new Template('reference')
-      template.render(result, compiler: {escapeAttributes: false})
+      template.render(result)
 
   # Private: Strips paragraph tags from the text.
   #

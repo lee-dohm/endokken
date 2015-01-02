@@ -106,9 +106,17 @@ class ClassPage extends Template
     rows = (@parameterRow(parameter) for parameter in method.arguments)
     Template.render('parameter-block-table', rows: rows.join('\n'))
 
+  parameterChildren: (children) ->
+    children = (@parameterChild(child) for child in children).join('\n')
+    Template.render('parameter-children', children: children)
+
+  parameterChild: (child) ->
+    Template.render('parameter-child', child, markdown: ['description'], resolve: ['description'], noParagraph: ['description'])
+
   parameterRow: (parameter) ->
     parameter.description = @resolveReferences(parameter.description)
     parameter.description = @markdownify(parameter.description, noParagraph: true)
+    parameter.children = if parameter.children then @parameterChildren(parameter.children) else ''
     Template.render('parameter-block-row', parameter)
 
   returnValueBlock: (method) ->
