@@ -34,7 +34,7 @@ class ClassPage extends Template
 
   sections: ->
     sections = @object.sections
-    sections.push({name: null})
+    sections.unshift({name: null})
     (@section(section) for section in sections).join('\n')
 
   section: (section) ->
