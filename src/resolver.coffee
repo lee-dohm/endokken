@@ -11,7 +11,7 @@ mozillaBaseUrl = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 # * Local instance item - `{::methodName}`
 #
 # These references can be either project-local or external to the project. Most external references
-# will be to [MDN](https://developer.mozilla.org).
+# will be to [the Mozilla Developer Network](https://developer.mozilla.org).
 #
 # * Project-local references
 #     * Class - links to `ClassName`
