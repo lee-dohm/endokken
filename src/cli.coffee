@@ -40,6 +40,36 @@ class Cli
     @args = @args.argv
 
   ###
+  Section: Helpers
+  ###
+
+  # Public: Gets the path to the directory where documentation should be stored.
+  #
+  # * `subpath` (optional) {String} to join to the docs directory.
+  #
+  # Returns a {String} containing the absolute path to the documentation directory with optional
+  #   subpath.
+  docsDirectory: (subpath) ->
+    @docsDir ?= path.resolve('./docs')
+    if subpath
+      path.join(@docsDir, subpath)
+    else
+      @docsDir
+
+  # Public: Gets the path to the root Endokken code directory.
+  #
+  # * `subpath` (optional) {String} to join to the source directory.
+  #
+  # Returns a {String} containing the absolute path to the root Endokken code directory with
+  #   optional subpath.
+  sourceDirectory: (subpath) ->
+    @sourceDir ?= path.dirname(path.resolve(__dirname))
+    if subpath
+      path.join(@sourceDir, subpath)
+    else
+      @sourceDir
+
+  ###
   Section: Metadata
   ###
 
@@ -64,11 +94,11 @@ class Cli
   ###
 
   buildDocsDirectory: ->
-    fs.mkdirSync('./docs') unless fs.existsSync('./docs')
+    fs.mkdirSync(@docsDirectory()) unless fs.existsSync(@docsDirectory())
 
-    staticPath = path.join(__dirname, '../static')
+    staticPath = @sourceDirectory('static')
     for source in fs.readdirSync(staticPath)
-      @copyFile(path.join(staticPath, source.toString()), './docs')
+      @copyFile(path.join(staticPath, source.toString()), @docsDirectory())
 
   copyFile: (source, dir) ->
     destination = path.join(dir, path.basename(source))
@@ -109,9 +139,9 @@ class Cli
     fs.writeFileSync(filePath, doc)
 
   renderFile: (file) ->
-    @render(FilePage.render(file), "./docs/#{path.basename(file, path.extname(file))}")
+    @render(FilePage.render(file), @docsDirectory(path.basename(file, path.extname(file))))
 
   renderClass: (klass) ->
-    @render(ClassPage.render(klass), "./docs/#{klass.name}")
+    @render(ClassPage.render(klass), @docsDirectory(klass.name))
 
 module.exports = Cli
