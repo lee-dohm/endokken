@@ -59,3 +59,6 @@ describe 'Template', ->
 
     it 'resolves references', ->
       expect(template.render({test: '{String}'}, resolve: ['test'])).toEqual "<a class='reference' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String'>String</a>"
+
+    it 'does not resolve references without braces', ->
+      expect(template.render({test: '`undefined`'}, resolve: ['test'], markdown: ['test'])).toEqual '<p><code>undefined</code></p>\n'
