@@ -31,7 +31,10 @@ class Template
   @markedOptions:
     gfm: true
     highlight: (code, lang) ->
-      Template.render('highlight', content: highlightjs.highlight(lang, code).value)
+      if lang
+        Template.render('highlight', content: highlightjs.highlight(lang, code).value)
+      else
+        code
     smartypants: true
 
   # Public: Renders the `template` using `locals`.
