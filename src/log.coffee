@@ -1,9 +1,72 @@
 class LogError extends Error
 
-# Public: Used to log messages.
+# Public: Used to log messages to the console.
+#
+# ## Log Levels
+#
+# There are five valid logging levels. In order from lowest- to highest-priority they are:
+# `debug`, `verbose`, `info`, `warn` and `error`. Setting the log level allows only messages
+# of that priority or higher to be displayed.
+#
+# ## Indentation
+#
+# Indentation can be controlled to allow for display of nested state.
+#
+# ## Examples
+#
+# Log levels
+#
+# ```coffee
+# Log.setLevel('warn')
+# Log.w('This message will be displayed')
+# Log.d('This message will not be displayed')
+# ```
+#
+# Indentation
+#
+# ```coffee
+# Log.d('Outer')                       # => Outer
+# Log.increaseIndent -> Log.d('Inner') # =>   Inner
+# Log.d('Outer again')                 # => Outer again
+# ```
 class Log
   constructor: ->
     @indent = 0
+
+  ###
+  Section: Logging
+  ###
+
+  # Public: Logs a `debug` message.
+  #
+  # * `message` Message {String} to log.
+  d: (message) ->
+    message = @indentText(message)
+    console.log(message) if @levelNumber(@level) <= @levelNumber('debug')
+
+  # Public: Logs a `verbose` message.
+  #
+  # * `message` Message {String} to log.
+  v: (message) ->
+    console.log(message) if @levelNumber(@level) <= @levelNumber('verbose')
+
+  # Public: Logs an `info` message.
+  #
+  # * `message` Message {String} to log.
+  i: (message) ->
+    console.log(message) if @levelNumber(@level) <= @levelNumber('info')
+
+  # Public: Logs a `warn` message.
+  #
+  # * `message` Message {String} to log.
+  w: (message) ->
+    console.log(message) if @levelNumber(@level) <= @levelNumber('warn')
+
+  # Public: Logs an `error` message.
+  #
+  # * `message` Message {String} to log.
+  e: (message) ->
+    console.log(message) if @levelNumber(@level) <= @levelNumber('error')
 
   ###
   Section: Indentation
@@ -16,15 +79,15 @@ class Log
 
   # Public: Increases the indentation of all future log messages by one level.
   #
-  # * `callback` (optional) {Function} to call within which indentation is increased by one level.
-  #     Outside this function, indentation is unchanged.
+  # * `fn` (optional) {Function} to call synchronously within which indentation is increased by one
+  #     level. Outside this function, indentation is unchanged.
   #
-  # Returns whatever the function returns if called with one.
-  increaseIndent: (callback) ->
+  # Returns whatever `fn` returns, if supplied.
+  increaseIndent: (fn) ->
     @indent += 2
 
-    if callback
-      retval = callback()
+    if fn
+      retval = fn()
       @indent -= 2
       retval
 
@@ -39,28 +102,11 @@ class Log
   Section: Log Level
   ###
 
+  # Public: Sets the logging level.
+  #
+  # * `level` Level name {String}.
   setLevel: (level) ->
     @level = level
-
-  ###
-  Section: Logging
-  ###
-
-  d: (message) ->
-    message = @indentText(message)
-    console.log(message) if @levelNumber(@level) <= @levelNumber('debug')
-
-  v: (message) ->
-    console.log(message) if @levelNumber(@level) <= @levelNumber('verbose')
-
-  i: (message) ->
-    console.log(message) if @levelNumber(@level) <= @levelNumber('info')
-
-  w: (message) ->
-    console.log(message) if @levelNumber(@level) <= @levelNumber('warn')
-
-  e: (message) ->
-    console.log(message) if @levelNumber(@level) <= @levelNumber('error')
 
   levelNumber: (level) ->
     switch level
