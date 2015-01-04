@@ -65,10 +65,10 @@ describe 'Log', ->
       Log.setIndent(0)
 
     it 'can be indented arbitrarily', ->
-      Log.setIndent(4)
+      Log.setIndent(3)
       Log.d('test')
 
-      expect(console.log).toHaveBeenCalledWith('    test')
+      expect(console.log).toHaveBeenCalledWith('   test')
 
     it 'can have its indentation increased', ->
       Log.increaseIndent()
@@ -77,11 +77,11 @@ describe 'Log', ->
       expect(console.log).toHaveBeenCalledWith('  test')
 
     it 'can have its indentation decreased', ->
-      Log.setIndent(4)
+      Log.setIndent(3)
       Log.decreaseIndent()
       Log.d('test')
 
-      expect(console.log).toHaveBeenCalledWith('  test')
+      expect(console.log).toHaveBeenCalledWith(' test')
 
     it 'does not allow its indentation to be set to less than zero', ->
       fn = ->

@@ -2,9 +2,9 @@
   .panel-heading
     .panel-title
       %span.signature!= @signature
-      %a{href: "##{@id}"}
+      %a{href: "##{@id}", 'data-toggle': 'tooltip', title: 'Permalink'}
         %span.octicon.octicon-link
-      %a{href: @srcUrl}
+      %a{href: @srcUrl, 'data-toggle': 'tooltip', title: 'Source Code'}
         %span.octicon.octicon-file-code
   .panel-body
     != @description
