@@ -133,8 +133,6 @@ class Resolver
       'RegExp'
       'Infinity'
       'NaN'
-      'undefined'
-      'null'
     ]
 
     @map[item] = "#{mozillaBaseUrl}/#{item}" for item in basics
