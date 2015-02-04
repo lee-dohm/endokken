@@ -6,4 +6,4 @@ module.exports =
     path.join(__dirname, 'fixtures', name)
 
   getFixtureText: (name) ->
-    fs.readFileSync(@getFixturePath(name)).toString()
+    fs.readFileSync(@getFixturePath(name)).toString().trim()

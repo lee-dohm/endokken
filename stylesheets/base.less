@@ -31,3 +31,18 @@ pre code {
 .signature {
   font-family: @monospace-fonts;
 }
+
+#table-of-contents {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+
+  #full {
+    display: none;
+  }
+
+  &:hover #full {
+    display: block;
+  }
+}
