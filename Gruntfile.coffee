@@ -12,7 +12,6 @@ module.exports = (grunt) ->
 
   jasmine = './node_modules/jasmine-focused/bin/jasmine-focused'
   lessc = './node_modules/less/bin/lessc'
-  theme = 'themes/default'
 
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
