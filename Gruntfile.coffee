@@ -1,4 +1,8 @@
 module.exports = (grunt) ->
+  jasmine = './node_modules/jasmine-focused/bin/jasmine-focused'
+  lessc = './node_modules/less/bin/lessc'
+  theme = 'themes/default'
+
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
@@ -7,17 +11,17 @@ module.exports = (grunt) ->
         expand: true
         cwd: 'bootstrap/dist/css'
         src: '*.min.css'
-        dest: 'themes/default/static/'
+        dest: "#{theme}/static/"
       js:
         expand: true
         cwd: 'bootstrap/dist/js'
         src: '*.min.js'
-        dest: 'themes/default/static/'
+        dest: "#{theme}/static/"
       fonts:
         expand: true
         cwd: 'bootstrap/dist/fonts'
         src: '*'
-        dest: 'themes/default/static/'
+        dest: "#{theme}/static/"
 
     coffeelint:
       options: grunt.file.readJSON('coffeelint.json')
@@ -26,14 +30,14 @@ module.exports = (grunt) ->
 
     shell:
       spec:
-        command: './node_modules/jasmine-focused/bin/jasmine-focused --captureExceptions --coffee spec/'
+        command: "#{jasmine} --captureExceptions --coffee spec/"
         options:
           stdout: true
           stderr: true
           failOnError: true
 
       less:
-        command: './node_modules/less/bin/lessc ./themes/default/stylesheets/base.less > ./themes/default/static/base.css'
+        command: "#{lessc} ./#{theme}/stylesheets/base.less > ./#{theme}/static/base.css"
         options:
           stdout: true
           stderr: true
