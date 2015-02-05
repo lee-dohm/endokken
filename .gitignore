@@ -5,6 +5,6 @@ v8.log
 lib/
 .node-version
 docs/
-static/base.css
-static/bootstrap*
-static/glyphicons*
+themes/default/static/base.css
+themes/default/static/bootstrap*
+themes/default/static/glyphicons*
