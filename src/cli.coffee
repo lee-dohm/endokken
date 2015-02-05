@@ -96,7 +96,7 @@ class Cli
   buildDocsDirectory: ->
     fs.mkdirSync(@docsDirectory()) unless fs.existsSync(@docsDirectory())
 
-    staticPath = @sourceDirectory('static')
+    staticPath = @sourceDirectory('themes/default/static')
     for source in fs.readdirSync(staticPath)
       @copyFile(path.join(staticPath, source.toString()), @docsDirectory())
 

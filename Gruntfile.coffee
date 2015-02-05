@@ -7,17 +7,17 @@ module.exports = (grunt) ->
         expand: true
         cwd: 'bootstrap/dist/css'
         src: '*.min.css'
-        dest: 'static/'
+        dest: 'themes/default/static/'
       js:
         expand: true
         cwd: 'bootstrap/dist/js'
         src: '*.min.js'
-        dest: 'static/'
+        dest: 'themes/default/static/'
       fonts:
         expand: true
         cwd: 'bootstrap/dist/fonts'
         src: '*'
-        dest: 'static/'
+        dest: 'themes/default/static/'
 
     coffeelint:
       options: grunt.file.readJSON('coffeelint.json')
@@ -33,7 +33,7 @@ module.exports = (grunt) ->
           failOnError: true
 
       less:
-        command: './node_modules/less/bin/lessc ./stylesheets/base.less > ./static/base.css'
+        command: './node_modules/less/bin/lessc ./themes/default/stylesheets/base.less > ./themes/default/static/base.css'
         options:
           stdout: true
           stderr: true
