@@ -21,10 +21,11 @@ Endokken was originally envisioned by me as [YARD][yard] for Atom packages. As s
 
 ## Copyright
 
-Copyright &copy; 2014-2015 by [Lee Dohm][lee-dohm]. See [LICENSE][license] for details.
+Copyright &copy; 2014-2015 by [Lee Dohm][lee-dohm] and [Lifted Studios][lifted]. See [LICENSE][license] for details.
 
 [atomdoc]: https://github.com/atom/atomdoc
 [lee-dohm]: http://www.lee-dohm.com
+[lifted]: http://www.liftedstudios.com
 [lsegal]: https://github.com/lsegal
 [license]: https://github.com/lee-dohm/endokken/blob/master/LICENSE.md
 [yard]: http://yardoc.org
