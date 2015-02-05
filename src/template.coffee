@@ -37,6 +37,8 @@ class Template
         code
     smartypants: true
 
+  @theme: 'default'
+
   # Public: Renders the `template` using `locals`.
   #
   # * `template` {String} name of the template to use.
@@ -138,7 +140,7 @@ class Template
     templatePath += '.haml' if path.extname(templatePath) is ''
 
     if templatePath.search(/\//) is -1
-      path.join(path.dirname(__dirname), 'templates', templatePath)
+      path.join(path.dirname(__dirname), 'themes', Template.theme, 'templates', templatePath)
     else
       templatePath
 

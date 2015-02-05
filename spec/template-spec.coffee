@@ -22,12 +22,12 @@ describe 'Template', ->
   describe '::normalizeTemplatePath', ->
     describe 'when given a simple file name', ->
       it 'adds the template directory', ->
-        expectedPath = path.join(path.dirname(__dirname), 'templates/file.haml')
+        expectedPath = path.join(path.dirname(__dirname), 'themes/default/templates/file.haml')
 
         expect(template.normalizeTemplatePath('file.haml')).toEqual expectedPath
 
       it 'adds the haml extension', ->
-        expectedPath = path.join(path.dirname(__dirname), 'templates/file.haml')
+        expectedPath = path.join(path.dirname(__dirname), 'themes/default/templates/file.haml')
 
         expect(template.normalizeTemplatePath('file')).toEqual expectedPath
 
