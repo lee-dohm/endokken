@@ -1,4 +1,15 @@
+path = require 'path'
+
 module.exports = (grunt) ->
+  themeJoin = (theme, subPath...) ->
+    path.join('./themes', theme, subPath...)
+
+  stylesheetOut = (theme) ->
+    themeJoin(theme, 'static', 'base.css')
+
+  stylesheetSource = (theme) ->
+    themeJoin(theme, 'stylesheets', 'base.less')
+
   jasmine = './node_modules/jasmine-focused/bin/jasmine-focused'
   lessc = './node_modules/less/bin/lessc'
   theme = 'themes/default'
@@ -11,17 +22,17 @@ module.exports = (grunt) ->
         expand: true
         cwd: 'bootstrap/dist/css'
         src: '*.min.css'
-        dest: "#{theme}/static/"
+        dest: themeJoin('default', 'static')
       js:
         expand: true
         cwd: 'bootstrap/dist/js'
         src: '*.min.js'
-        dest: "#{theme}/static/"
+        dest: themeJoin('default', 'static')
       fonts:
         expand: true
         cwd: 'bootstrap/dist/fonts'
         src: '*'
-        dest: "#{theme}/static/"
+        dest: themeJoin('default', 'static')
 
     coffeelint:
       options: grunt.file.readJSON('coffeelint.json')
@@ -37,7 +48,7 @@ module.exports = (grunt) ->
           failOnError: true
 
       less:
-        command: "#{lessc} ./#{theme}/stylesheets/base.less > ./#{theme}/static/base.css"
+        command: "#{lessc} #{stylesheetSource('default')} > #{stylesheetOut('default')}"
         options:
           stdout: true
           stderr: true
