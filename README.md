@@ -15,10 +15,16 @@ Endokken also supports the following command-line options:
 * `--metadata [FILENAME]` Dumps the AtomDoc metadata to the file name you provide or `api.json` if no filename is given.
 * `--help` Displays command-line help
 
+## Acknowledgements
+
+Endokken was originally envisioned by me as [YARD][yard] for Atom packages. As such, Endokken owes a lot of its inspiration and ideas to YARD and its author [Loren Segal][lsegal].
+
 ## Copyright
 
 Copyright &copy; 2014-2015 by [Lee Dohm][lee-dohm]. See [LICENSE][license] for details.
 
 [atomdoc]: https://github.com/atom/atomdoc
 [lee-dohm]: http://www.lee-dohm.com
+[lsegal]: https://github.com/lsegal
 [license]: https://github.com/lee-dohm/endokken/blob/master/LICENSE.md
+[yard]: http://yardoc.org
