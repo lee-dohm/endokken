@@ -17,7 +17,7 @@ Endokken also supports the following command-line options:
 
 ## Acknowledgements
 
-Endokken was originally envisioned by me as [YARD][yard] for Atom packages. As such, Endokken owes a lot of its inspiration and ideas to YARD and its author [Loren Segal][lsegal].
+Endokken was originally envisioned as [YARD][yard] for Atom packages. As such, Endokken owes a lot of its inspiration and ideas to YARD and its author [Loren Segal][lsegal].
 
 ## Copyright
 
