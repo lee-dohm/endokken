@@ -32,6 +32,10 @@ class Cli
 
   parseArguments: ->
     @args = require('yargs')
+    @args = @args.options 'extension',
+              alias: 'e'
+              default: ''
+              describe: 'File extension to give to generated documentation files'
     @args = @args.options 'metadata',
               alias: 'm'
               default: false
@@ -46,15 +50,21 @@ class Cli
   # Public: Gets the path to the directory where documentation should be stored.
   #
   # * `subpath` (optional) {String} to join to the docs directory.
+  # * `extension` (optional) {String} to append as a file extension to the generated path.
   #
   # Returns a {String} containing the absolute path to the documentation directory with optional
   #   subpath.
-  docsDirectory: (subpath) ->
+  docsDirectory: (subpath, extension) ->
     @docsDir ?= path.resolve('./docs')
     if subpath
+      subpath = subpath + @normalizeExtension(extension) if extension
       path.join(@docsDir, subpath)
     else
       @docsDir
+
+  normalizeExtension: (extension) ->
+    extension = ".#{extension}" unless extension.match(/^\./)
+    extension
 
   # Public: Gets the path to the root Endokken code directory.
   #
@@ -139,9 +149,9 @@ class Cli
     fs.writeFileSync(filePath, doc)
 
   renderFile: (file) ->
-    @render(FilePage.render(file), @docsDirectory(path.basename(file, path.extname(file))))
+    @render(FilePage.render(file), @docsDirectory(path.basename(file, path.extname(file)), @args.extension))
 
   renderClass: (klass) ->
-    @render(ClassPage.render(klass), @docsDirectory(klass.name))
+    @render(ClassPage.render(klass), @docsDirectory(klass.name, @args.extension))
 
 module.exports = Cli
