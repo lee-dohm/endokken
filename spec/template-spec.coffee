@@ -57,8 +57,18 @@ describe 'Template', ->
     it 'converts markdown', ->
       expect(template.render({test: '*test*'}, markdown: ['test'])).toEqual '<p><em>test</em></p>\n'
 
+    # coffeelint: disable=max_line_length
+
     it 'resolves references', ->
-      expect(template.render({test: '{String}'}, resolve: ['test'])).toEqual "<a class='reference' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String'>String</a>"
+      actual = template.render({test: '{String}'}, resolve: ['test'])
+      mozilla = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String"
+      expected = "<a class='reference' href='#{mozilla}'>String</a>"
+
+      expect(actual).toEqual expected
+
+    # coffeelint: enable=max_line_length
 
     it 'does not resolve references without braces', ->
-      expect(template.render({test: '`undefined`'}, resolve: ['test'], markdown: ['test'])).toEqual '<p><code>undefined</code></p>\n'
+      actual = template.render({test: '`undefined`'}, resolve: ['test'], markdown: ['test'])
+
+      expect(actual).toEqual '<p><code>undefined</code></p>\n'
