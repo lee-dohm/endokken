@@ -26,7 +26,7 @@
   "homepage": "https://github.com/lee-dohm/endokken",
   "dependencies": {
     "coffee-script": "^1.8.0",
-    "donna": "~1.0",
+    "donna": "^1.0.11",
     "haml-coffee": "~1.14.1",
     "less": "^2.1.2",
     "marked": "^0.3.3",
