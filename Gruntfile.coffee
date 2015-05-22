@@ -10,7 +10,7 @@ module.exports = (grunt) ->
   stylesheetSource = (theme) ->
     themeJoin(theme, 'stylesheets', 'base.less')
 
-  jasmine = './node_modules/jasmine-focused/bin/jasmine-focused'
+  jasmine = './node_modules/jasmine-node/bin/jasmine-node'
   lessc = './node_modules/less/bin/lessc'
 
   grunt.initConfig
