@@ -24,7 +24,7 @@ class Cli
     @version = require('../package').version
 
   # Public: Parses the command-line arguments.
-  parseArguments: ->
+  parseArguments: (argv = process.argv) ->
     @args = yargs
       .options 'extension',
         alias: 'e'
@@ -37,7 +37,7 @@ class Cli
         describe: 'Dump metadata to a file or api.json if no filename given'
       .help('help').alias('help', '?')
       .version("v#{@version}")
-      .argv
+      .parse(argv)
 
   # Public: Executes the program.
   run: ->
