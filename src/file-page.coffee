@@ -33,7 +33,16 @@ class FilePage extends Template
   #
   # Returns a {String} containing the rendered content.
   render: ->
-    console.log("File: #{path.basename(@filePath, path.extname(@filePath))}")
-    @markdownify(fs.readFileSync(@filePath).toString())
+    name = path.basename(@filePath, path.extname(@filePath))
+    console.log("File: #{name}")
+
+    contents = fs.readFileSync(@filePath).toString()
+    firstLine = contents.split("\n")[0]
+
+    if path.extname(@filePath) is '.md' and not firstLine.match(/^#\s/)
+      console.log("Generating header: #{name}")
+      contents = "# #{name}\n#{contents}"
+
+    @markdownify(contents)
 
 module.exports = FilePage
