@@ -21,9 +21,7 @@ Template = require './template'
 class Cli
   # Public: Parses the command-line arguments.
   constructor: ->
-    packagePath = path.join(path.dirname(__dirname), 'package.json')
-    packageInfo = JSON.parse(fs.readFileSync(packagePath).toString())
-    @version = packageInfo.version
+    @version = require('../package').version
     @parseArguments()
 
   # Public: Executes the program.
