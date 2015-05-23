@@ -27,6 +27,7 @@ class FilePage extends Template
   #
   # * `filePath` {String} containing the path to the file to be rendered.
   constructor: (@filePath) ->
+    super()
 
   # Public: Renders the file.
   #

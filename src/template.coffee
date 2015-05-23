@@ -3,7 +3,7 @@ path = require 'path'
 
 hamlc = require 'haml-coffee'
 highlightjs = require 'highlight.js'
-marked = require 'marked'
+MarkdownIt = require 'markdown-it'
 up = require 'underscore-plus'
 
 Resolver = require './resolver'
@@ -28,14 +28,13 @@ Resolver = require './resolver'
 # fullPage = Template.render('full-page', section: section)
 # ```
 class Template
-  @markedOptions:
-    gfm: true
+  @markdownOptions:
     highlight: (code, lang) ->
       if lang
         Template.render('highlight', content: highlightjs.highlight(lang, code).value)
       else
         code
-    smartypants: true
+    html: true
 
   @theme: 'default'
 
@@ -57,6 +56,7 @@ class Template
   #
   # * `template` Name {String} of the template to use to render the object.
   constructor: (template) ->
+    @md = new MarkdownIt(Template.markdownOptions)
     @templatePath = @normalizeTemplatePath(template)
 
   # Public: Renders the page.
@@ -93,7 +93,7 @@ class Template
   # Returns a {String} containing the generated HTML.
   markdownify: (content, options = {}) ->
     return '' unless content
-    output = marked(content, Template.markedOptions)
+    output = @md.render(content, Template.markedOptions)
     output = @stripParagraphTags(output) if options.noParagraph
     output
 

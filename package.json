@@ -29,7 +29,7 @@
     "donna": "^1.0.11",
     "haml-coffee": "~1.14.1",
     "less": "^2.1.2",
-    "marked": "^0.3.3",
+    "markdown-it": "^4.2.1",
     "highlight.js": "^8.5.0",
     "tello": "~1.0",
     "underscore-plus": "~1.6.0",

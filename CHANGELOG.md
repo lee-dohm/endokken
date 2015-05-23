@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## **master** &mdash; *Unreleased*
+
+* Convert to using the markdown-it module for Markdown processing
+
 ## **v0.3.0** &mdash; *Released: 22 May 2015*
 
 * :arrow_up: donna v1.0.11
