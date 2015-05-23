@@ -38,6 +38,7 @@ class Cli
       .options 'title',
         default: "#{@packageInfo.name} v#{@packageInfo.version}"
         describe: 'Title of index page'
+        requireArgs: true
       .help('help').alias('help', '?')
       .version("v#{@packageInfo.version}")
       .parse(argv)
