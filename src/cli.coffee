@@ -3,6 +3,7 @@ path = require 'path'
 
 donna = require 'donna'
 tello = require 'tello'
+yargs = require 'yargs'
 
 ClassPage = require './class-page'
 FilePage = require './file-page'
@@ -30,18 +31,21 @@ class Cli
     @generateMetadata()
     @generateDocumentation()
 
+  # Private: Parses the command-line arguments.
   parseArguments: ->
-    @args = require('yargs')
-    @args = @args.options 'extension',
-              alias: 'e'
-              default: ''
-              describe: 'File extension to give to generated documentation files'
-    @args = @args.options 'metadata',
-              alias: 'm'
-              default: false
-              describe: 'Dump metadata to a file or api.json if no filename given'
-    @args = @args.help('help').alias('help', '?')
-    @args = @args.argv
+    @args = yargs
+      .options 'extension',
+        alias: 'e'
+        default: ''
+        describe: 'File extension to give to generated documentation files'
+        requireArgs: true
+      .options 'metadata',
+        alias: 'm'
+        default: false
+        describe: 'Dump metadata to a file or api.json if no filename given'
+      .help('help').alias('help', '?')
+      .version("v#{@version}")
+      .argv
 
   ###
   Section: Helpers
