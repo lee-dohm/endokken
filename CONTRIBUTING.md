@@ -10,7 +10,7 @@ These are just guidelines, not rules, use your best judgement and feel free to p
 * Include the version of Atom you are using and the OS.
 * Include screenshots and animated GIFs whenever possible; they are immensely helpful.
 * Include the behavior you expected.
-* Check the dev tools (`alt-cmd-i`) for errors to include. If the dev tools are open *before* the error is triggered, a full stack trace for the error will be logged. If you can reproduce the error, use this approach to get the full stack trace and include it in the issue.
+* Check the dev tools <kbd>Alt+Cmd+I</kbd> for errors to include. If the dev tools are open *before* the error is triggered, a full stack trace for the error will be logged. If you can reproduce the error, use this approach to get the full stack trace and include it in the issue.
 * Perform a cursory search to see if a similar issue has already been submitted.
 * Please setup a [profile picture](https://help.github.com/articles/how-do-i-set-up-my-profile-picture) to make yourself recognizable and so we can all get to know each other better.
 
@@ -55,6 +55,7 @@ These are just guidelines, not rules, use your best judgement and feel free to p
     * :lock: `:lock:` when dealing with security
     * :arrow_up: `:arrow_up:` when upgrading dependencies
     * :arrow_down: `:arrow_down:` when downgrading dependencies
+    * :shirt: `:shirt:` when removing linter warnings
 
 ## CoffeeScript Styleguide
 
