@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## **v0.3.0** &mdash; *Released: 22 May 2015*
+
+* :arrow_up: donna v1.0.11
+* Add a version command-line argument
+
 ## **v0.2.0** &mdash; *Released: 18 February 2015*
 
 * Moved all stylesheets, static resources and templates into a themes directory in preparation for theming
