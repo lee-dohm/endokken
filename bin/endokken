@@ -4,4 +4,5 @@ require('coffee-script/register');
 var Cli = require('../src/cli');
 
 cli = new Cli();
+cli.parseArguments();
 cli.run();

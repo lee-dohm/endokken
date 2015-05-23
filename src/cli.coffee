@@ -22,14 +22,8 @@ class Cli
   # Public: Parses the command-line arguments.
   constructor: ->
     @version = require('../package').version
-    @parseArguments()
 
-  # Public: Executes the program.
-  run: ->
-    @generateMetadata()
-    @generateDocumentation()
-
-  # Private: Parses the command-line arguments.
+  # Public: Parses the command-line arguments.
   parseArguments: ->
     @args = yargs
       .options 'extension',
@@ -44,6 +38,11 @@ class Cli
       .help('help').alias('help', '?')
       .version("v#{@version}")
       .argv
+
+  # Public: Executes the program.
+  run: ->
+    @generateMetadata()
+    @generateDocumentation()
 
   ###
   Section: Helpers
