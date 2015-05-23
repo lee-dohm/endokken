@@ -1,6 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 
+emoji = require 'markdown-it-emoji'
 hamlc = require 'haml-coffee'
 highlightjs = require 'highlight.js'
 MarkdownIt = require 'markdown-it'
@@ -56,7 +57,7 @@ class Template
   #
   # * `template` Name {String} of the template to use to render the object.
   constructor: (template) ->
-    @md = new MarkdownIt(Template.markdownOptions)
+    @md = new MarkdownIt(Template.markdownOptions).use(emoji)
     @templatePath = @normalizeTemplatePath(template)
 
   # Public: Renders the page.

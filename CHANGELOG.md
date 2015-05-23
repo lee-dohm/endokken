@@ -2,6 +2,7 @@
 
 ## **master** &mdash; *Unreleased*
 
+* [#14](https://github.com/lee-dohm/endokken/issues/14) &mdash; Add emoji support
 * Convert to using the markdown-it module for Markdown processing
 
 ## **v0.3.0** &mdash; *Released: 22 May 2015*
