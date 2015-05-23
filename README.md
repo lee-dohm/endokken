@@ -12,10 +12,11 @@ $ endokken
 
 Endokken also supports the following command-line options:
 
-* `--extension [EXT]` Adds the given extension to all generated documentation files. Defaults to no extension for REST-like purity.
-* `--metadata [FILENAME]` Dumps the AtomDoc metadata to the file name you provide or `api.json` if no filename is given.
-* `--title [TITLE]` Title of index page, default is name of current directory.
-* `--help` Displays command-line help
+* `--extension [EXT]` &mdash; Adds the given extension to all generated documentation files. Defaults to no extension for REST-like purity.
+* `--metadata [FILENAME]` &mdash; Dumps the AtomDoc metadata to the file name you provide or `api.json` if no filename is given.
+* `--title [TITLE]` &mdash; Title of index page, default is name of current directory.
+* `--version` &mdash; Displays the version.
+* `--help` &mdash; Displays command-line help.
 
 ## Acknowledgements
 
