@@ -1,4 +1,4 @@
-# Endokken [![Build Status](https://travis-ci.org/lee-dohm/endokken.svg?branch=master)](https://travis-ci.org/lee-dohm/endokken) [![npm version](https://badge.fury.io/js/endokken.svg)](http://badge.fury.io/js/endokken)[![Dependency Status](https://david-dm.org/lee-dohm/endokken.svg)](https://david-dm.org/lee-dohm/endokken)
+# Endokken [![Build Status](https://travis-ci.org/lee-dohm/endokken.svg?branch=master)](https://travis-ci.org/lee-dohm/endokken) [![npm version](https://badge.fury.io/js/endokken.svg)](http://badge.fury.io/js/endokken) [![Dependency Status](https://david-dm.org/lee-dohm/endokken.svg)](https://david-dm.org/lee-dohm/endokken)
 
 Generates HTML documentation for your Atom package from [AtomDoc][atomdoc] comments in your code and your GitHub project's own Markdown files.
 
