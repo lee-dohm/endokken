@@ -21,7 +21,7 @@ Template = require './template'
 class Cli
   # Public: Parses the command-line arguments.
   constructor: ->
-    @version = require('../package').version
+    @packageInfo = require('../package')
 
   # Public: Parses the command-line arguments.
   parseArguments: (argv = process.argv) ->
@@ -36,10 +36,10 @@ class Cli
         default: false
         describe: 'Dump metadata to a file or api.json if no filename given'
       .options 'title',
-        default: path.basename process.cwd()
+        default: "#{@packageInfo.name} v#{@packageInfo.version}"
         describe: 'Title of index page'
       .help('help').alias('help', '?')
-      .version("v#{@version}")
+      .version("v#{@packageInfo.version}")
       .parse(argv)
 
   # Public: Executes the program.
@@ -149,7 +149,7 @@ class Cli
                           content: content
                           title: @args.title
                           navigation: @navigation
-                          version: @version
+                          version: @packageInfo.version
     fs.writeFileSync(filePath, doc)
 
   renderFile: (file) ->
