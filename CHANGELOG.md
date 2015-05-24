@@ -2,6 +2,8 @@
 
 ## **master** &mdash; *Unreleased*
 
+* [#29](https://github.com/lee-dohm/endokken/issues/29) &mdash; Resolve references in file pages
+* [#15](https://github.com/lee-dohm/endokken/issues/15) &mdash; Add header to file page if it doesn't already exist
 * [PR #30](https://github.com/lee-dohm/endokken/pull/30) by [@jysperm](https://github.com/jysperm) &mdash; Add a `--title` command-line option
 * [#14](https://github.com/lee-dohm/endokken/issues/14) &mdash; Add emoji support
 * Convert to using the markdown-it module for Markdown processing
