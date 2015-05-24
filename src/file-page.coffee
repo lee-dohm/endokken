@@ -43,6 +43,6 @@ class FilePage extends Template
       console.log("Generating header: #{name}")
       contents = "# #{name}\n#{contents}"
 
-    @markdownify(contents)
+    @markdownify(@resolveReferences(contents))
 
 module.exports = FilePage
