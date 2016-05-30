@@ -111,6 +111,8 @@ class ClassPage extends Template
     Template.render('parameter-children', children: children)
 
   parameterChild: (child) ->
+    children = if child.children then @parameterChildren(child.children) else ''
+    child.description = @markdownify(child.description, noParagraph: true) + children
     Template.render('parameter-child', child, markdown: ['description'], resolve: ['description'], noParagraph: ['description'])
 
   parameterRow: (parameter) ->
